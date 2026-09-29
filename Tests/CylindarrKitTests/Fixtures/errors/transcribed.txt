@@ -1,0 +1,11 @@
+private	ERROR: [youtube] AAAAAAAAAAA: Private video. Sign in if you've been granted access to this video. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies
+removed	ERROR: [youtube] AAAAAAAAAAA: Video unavailable. This video has been removed by the uploader
+terminated	ERROR: [youtube] AAAAAAAAAAA: Video unavailable. This video is no longer available because the YouTube account associated with this video has been terminated.
+geo	ERROR: [youtube] AAAAAAAAAAA: Video unavailable. The uploader has not made this video available in your country
+members	ERROR: [youtube] AAAAAAAAAAA: Join this channel to get access to members-only content like this video, and other exclusive perks.
+premiere	ERROR: [youtube] AAAAAAAAAAA: Premieres in 3 hours
+upcoming	ERROR: [youtube] AAAAAAAAAAA: This live event will begin in 2 hours.
+rate	ERROR: [youtube] AAAAAAAAAAA: Unable to download API page: HTTP Error 429: Too Many Requests
+format	ERROR: [youtube] AAAAAAAAAAA: Requested format is not available. Use --list-formats for a list of available formats
+network	ERROR: [youtube] AAAAAAAAAAA: Unable to download webpage: <urlopen error [Errno -3] Temporary failure in name resolution> (caused by URLError(gaierror(-3, 'Temporary failure in name resolution')))
+disk	ERROR: unable to write data: [Errno 28] No space left on device

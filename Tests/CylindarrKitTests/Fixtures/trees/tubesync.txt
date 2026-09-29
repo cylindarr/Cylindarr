@@ -1,0 +1,32 @@
+.DS_Store
+A Concert Recording (Live 2021).mkv
+A Documentary About Boats (1984).mp4
+Conference_Keynote_2021.mp4
+Live Set 🎸 Full Show.mkv
+Opening Keynote, Day One.webm
+Talk 2023 - Rendering pipelines, start to finish.mp4
+video/Paper Lanterns/2010-04-20_paper-lanterns_the-first-short_Qm4TzH8vK2a_720p-vp09-mp4a.en.vtt
+video/Paper Lanterns/2010-04-20_paper-lanterns_the-first-short_Qm4TzH8vK2a_720p-vp09-mp4a.mkv
+video/Paper Lanterns/2010-04-20_paper-lanterns_the-first-short_Qm4TzH8vK2a_720p-vp09-mp4a.nfo
+video/Paper Lanterns/2011-02-02_paper-lanterns_lanterns-part-2-original-series-2011_Hb2Wq9Lr0Ts_720p-vp09-mp4a.en.vtt
+video/Paper Lanterns/2011-02-02_paper-lanterns_lanterns-part-2-original-series-2011_Hb2Wq9Lr0Ts_720p-vp09-mp4a.mkv
+video/Paper Lanterns/2011-02-02_paper-lanterns_lanterns-part-2-original-series-2011_Hb2Wq9Lr0Ts_720p-vp09-mp4a.nfo
+video/Paper Lanterns/2014-01-24_paper-lanterns_episode-one-premise_-aB3dE5fG7h_1080p-avc1-mp4a.en.vtt
+video/Paper Lanterns/2014-01-24_paper-lanterns_episode-one-premise_-aB3dE5fG7h_1080p-avc1-mp4a.mkv
+video/Paper Lanterns/2014-01-24_paper-lanterns_episode-one-premise_-aB3dE5fG7h_1080p-avc1-mp4a.nfo
+video/Paper Lanterns/2015-06-17_paper-lanterns_episode-three-teaser_3Hk_mN9-pq1_1080p-avc1-mp4a.mkv
+video/Paper Lanterns/2015-06-17_paper-lanterns_episode-three-teaser_3Hk_mN9-pq1_1080p-avc1-mp4a.nfo
+video/Paper Lanterns/2015-11-10_paper-lanterns_becoming-your-own-fan_g8Yt2Pq4Ls0_1080p-vp9-mp4a.mkv
+video/Paper Lanterns/2015-11-10_paper-lanterns_becoming-your-own-fan_g8Yt2Pq4Ls0_1080p-vp9-mp4a.nfo
+video/Paper Lanterns/2016-01-27_paper-lanterns_how-i-write-my-notes-and-drafts_Vr5Nq2Lw8Kz_1080p-vp09-mp4a.mkv
+video/Paper Lanterns/2016-01-27_paper-lanterns_how-i-write-my-notes-and-drafts_Vr5Nq2Lw8Kz_1080p-vp09-mp4a.nfo
+video/Paper Lanterns/2020-06-30_paper-lanterns_lanterns-reality_Kt3Wq8Zp1Ma_1080p-vp09-mp4a.en.vtt
+video/Paper Lanterns/2020-06-30_paper-lanterns_lanterns-reality_Kt3Wq8Zp1Ma_1080p-vp09-mp4a.mkv
+video/Paper Lanterns/2020-06-30_paper-lanterns_lanterns-reality_Kt3Wq8Zp1Ma_1080p-vp09-mp4a.nfo
+video/Paper Lanterns/2023-03-21_paper-lanterns_lanterns-complete-updated-2023-edition_Zc9XyT3nQeA_premium-vp09-mp4a.mkv
+video/Paper Lanterns/2023-03-21_paper-lanterns_lanterns-complete-updated-2023-edition_Zc9XyT3nQeA_premium-vp09-mp4a.nfo
+video/Paper Lanterns/2024-03-15_paper-lanterns_beat-the-blank-page_7Rb_kLp2Wd0_1080p-vp09-mp4a.mkv
+video/Paper Lanterns/2024-03-15_paper-lanterns_beat-the-blank-page_7Rb_kLp2Wd0_1080p-vp09-mp4a.nfo
+video/Saved/2018-05-29_saved-to-tubesync-playlist_teaching-an-old-console-new-tricks_Wp4Xs7Nb2Qe_premium-vp09-mp4a.en.vtt
+video/Saved/2018-05-29_saved-to-tubesync-playlist_teaching-an-old-console-new-tricks_Wp4Xs7Nb2Qe_premium-vp09-mp4a.mkv
+video/Saved/2018-05-29_saved-to-tubesync-playlist_teaching-an-old-console-new-tricks_Wp4Xs7Nb2Qe_premium-vp09-mp4a.nfo

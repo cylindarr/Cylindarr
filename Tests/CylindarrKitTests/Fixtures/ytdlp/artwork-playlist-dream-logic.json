@@ -1,0 +1,39 @@
+{
+ "_type": "playlist",
+ "id": "PLDQ6BYd73QHxthC8dcgT6ovfGEOBYjhhj",
+ "title": "Dream Logic",
+ "channel": "Kirby Ferguson",
+ "channel_id": "UCu-3YlvaBS4bsya-1eFi62w",
+ "description": "Exploring the horizons of creative work",
+ "thumbnails": [
+  {
+   "url": "https://i.ytimg.com/vi/snyvQ9COmb8/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLC9pLNLpJNkSukjtNPBk57M6CL4Tg",
+   "height": 94,
+   "width": 168,
+   "id": "0",
+   "resolution": "168x94"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/snyvQ9COmb8/hqdefault.jpg?sqp=-oaymwEWCMQBEG5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLDlbUJQcrYoVKk4GrlGwZGKSL4o6w",
+   "height": 110,
+   "width": 196,
+   "id": "1",
+   "resolution": "196x110"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/snyvQ9COmb8/hqdefault.jpg?sqp=-oaymwEXCPYBEIoBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBsIHhXVuI9HyQ2Tl_Ui2EauvlMbA",
+   "height": 138,
+   "width": 246,
+   "id": "2",
+   "resolution": "246x138"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/snyvQ9COmb8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLD8A-5RrlepBZtIy2QWXJQFppv76g",
+   "height": 188,
+   "width": 336,
+   "id": "3",
+   "resolution": "336x188"
+  }
+ ],
+ "entries": []
+}

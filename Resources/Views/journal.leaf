@@ -1,0 +1,8 @@
+#extend("base"):
+#export("title"):Journal#endexport
+#export("body"):
+<h1>Journal</h1>
+<p class="filters"><a href="/journal">Everything</a> · <a href="/journal?outcome=failed">Failed</a> · <a href="/journal?outcome=deferred">Deferred</a> · <a href="/journal?outcome=wanted">Wanted</a></p>
+#extend("entries")
+#endexport
+#endextend

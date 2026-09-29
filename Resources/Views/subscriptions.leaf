@@ -1,0 +1,27 @@
+#extend("base"):
+#export("title"):Subscriptions#endexport
+#export("body"):
+#extend("banners")
+<h1>Subscriptions</h1>
+<form method="post" action="/subscriptions" class="add">
+  <input name="url" placeholder="Channel or playlist URL, @handle, or id" size="44" required>
+  <input name="name" placeholder="Show name (defaults to YouTube's)" size="28">
+  <label><input type="checkbox" name="backfill"> Whole back catalogue</label>
+  <label><input type="checkbox" name="grabList"> Grab list (each video is a one-off film)</label>
+  <button>Follow</button>
+</form>
+<p class="note">New subscriptions start from 30 days ago unless the back catalogue is asked for. Asking for it lists the whole channel or playlist in the background; the videos are then fetched one at a time with a pause between, so a large back catalogue takes days, which is what keeps one address from fetching hundreds of videos in a night.</p>
+<table class="subs">
+  <thead><tr><th>Show</th><th>In library</th><th>Waiting</th><th>Need you</th><th>Last polled</th></tr></thead>
+  <tbody>
+  #for(s in subscriptions):
+    <tr class="#if(!s.enabled):off#endif">
+      <td><a href="/subscriptions/#(s.id)">#(s.name)</a><div class="id">#(s.kind) #(s.youtubeID)#if(s.grabList): · grab list#endif#if(!s.enabled): · off#endif</div></td>
+      <td>#(s.placed)</td><td>#(s.waiting)</td><td class="#if(s.failed > 0):bad#endif">#(s.failed)</td>
+      <td class="when">#(s.lastPolled)#if(s.feedFailures > 0): · feed failed #(s.feedFailures)×#endif</td>
+    </tr>
+  #endfor
+  </tbody>
+</table>
+#endexport
+#endextend

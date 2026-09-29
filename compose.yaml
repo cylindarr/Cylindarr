@@ -1,0 +1,71 @@
+# Cylindarr and its PO token provider. Copy this file and .env.example next
+# to each other, rename the second to .env, change the paths marked below,
+# and run `docker compose up -d --build`. docs/install.md walks through it.
+services:
+  cylindarr:
+    build: .
+    image: cylindarr:latest
+    container_name: cylindarr
+    restart: unless-stopped
+    # The user and group that own your media library, so the files Cylindarr
+    # writes are readable by Plex or Jellyfin. `id` on the host prints yours.
+    user: "${PUID:-1000}:${PGID:-1000}"
+    ports:
+      - "8295:8080"
+    # Lets Cylindarr reach Plex or Jellyfin on the same host as
+    # http://host.docker.internal:32400 (or :8096).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      # Where the library is inside the container: the right-hand side of
+      # the library volume below.
+      CYLINDARR_LIBRARY: /data/youtube
+      CYLINDARR_POT_PROVIDER_URL: http://pot:4416
+      # Set a password in .env to have every page ask for it. Leave it blank
+      # only if nothing but you can reach this port.
+      CYLINDARR_PASSWORD: ${CYLINDARR_PASSWORD:-}
+    volumes:
+      # The database, cookies and yt-dlp updates. Create the folder before
+      # the first start so it belongs to the user above.
+      - ./data:/app/data
+      # CHANGE: the folder on the host that holds (or will hold) the library.
+      # Shows/, Grabs/ and Cylindarr's staging folder all live under it.
+      - /path/to/media/youtube:/data/youtube
+    # An encode needs a few hundred MB; the cap keeps a runaway one inside
+    # this container.
+    mem_limit: 6g
+    networks: [default, pot]
+
+    # To encode on a GPU, uncomment one block and pick the matching encoder
+    # on the settings page (docs/encoding.md).
+    #
+    # Intel Quick Sync, or AMD through VA-API. The group is the one that owns
+    # /dev/dri/renderD* on the host: `stat -c %g /dev/dri/renderD128`.
+    # devices:
+    #   - /dev/dri:/dev/dri
+    # group_add:
+    #   - "993"
+    #
+    # NVIDIA, with the NVIDIA Container Toolkit installed on the host.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu, video, compute, utility]
+
+  # PO tokens for yt-dlp, which put off YouTube's bot check. Version 2.0.0 or
+  # later only; never publish its port.
+  pot:
+    image: brainicism/bgutil-ytdlp-pot-provider:2.0.0
+    container_name: cylindarr-pot
+    restart: unless-stopped
+    init: true
+    networks: [pot]
+
+networks:
+  # Cylindarr reaches the provider here; the provider reaches nothing else.
+  pot:
+    internal: true

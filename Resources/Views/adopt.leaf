@@ -1,0 +1,27 @@
+#extend("base"):
+#export("title"):Adopt#endexport
+#export("body"):
+<h1>Adopt an existing library</h1>
+<p class="note">Brings a tree written by Pinchflat, TubeSync or anything that used yt-dlp under management without downloading anything again. Each video is identified by the id in its name, its <code>.info.json</code> or its NFO. Nothing moves until the plan has been read and run. Stop the program that wrote the tree first, so two programs never write it at once.</p>
+#if(running):<div class="banner warn">Adopting: #(progress). Progress is in the journal.</div>#endif
+<form method="get" action="/adopt" class="inline">
+  <input name="source" value="#(source)" size="48" placeholder="The old tree as this container sees it, such as /import/pinchflat"> <button class="quiet">Scan</button>
+</form>
+<form method="post" action="/adopt/plan">
+  <input type="hidden" name="source" value="#(source)">
+  <table class="subs">
+    <thead><tr><th>Folder</th><th>Videos</th><th>Identified</th><th>Goes to</th></tr></thead>
+    <tbody>
+    #for(f in folders):
+      <tr><td>#if(f.path == ""):(top level)#else:#(f.path)#endif</td><td>#(f.videos)</td><td>#(f.identified)</td>
+        <td><input type="hidden" name="folder[]" value="#(f.path)"><select name="map[]">
+          #for(c in choices):<option value="#(c.value)" #if(c.value == f.destination):selected#endif>#(c.label)</option>#endfor
+        </select></td></tr>
+    #endfor
+    </tbody>
+  </table>
+  <p class="note">Folders go to the show of the subscription they are mapped to; follow the subscriptions first. In a folder mapped to Grabs, a video with no id anywhere is filed by its file name.</p>
+  <button>Show the plan</button>
+</form>
+#endexport
+#endextend

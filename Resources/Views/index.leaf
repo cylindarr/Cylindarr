@@ -1,0 +1,59 @@
+#extend("base"):
+#export("title"):Overview#endexport
+#export("body"):
+#extend("banners")
+<section class="access">
+  #for(a in access):<span class="#(a.state)"><b>#(a.part)</b> #(a.detail)</span>#endfor
+  <span class="when">#(accessChecked)</span>
+  <form method="post" action="/access/verify" class="inline"><button class="quiet">Check now</button></form>
+  <form method="post" action="/access/update" class="inline"><button class="quiet">Update yt-dlp</button></form>
+</section>
+<section class="counts">
+  <div class="wanted"><b>#(counts.wanted)</b><span class="pill wanted">wanted</span></div>
+  <div class="deferred"><b>#(counts.deferred)</b><span class="pill deferred">waiting to retry</span></div>
+  <div class="failed#if(needYou): attention#endif"><b>#(counts.failed)</b><span class="pill failed">need you</span></div>
+  <div class="placed"><b>#(counts.placed)</b><span class="pill placed">in the library</span></div>
+  <div class="skipped"><b>#(counts.skipped)</b><span class="pill skipped">skipped</span></div>
+</section>
+<section class="toolbar">
+  <form method="post" action="/grab" class="inline">
+    <input name="url" placeholder="Paste a video URL to grab as a one-off" size="48">
+    <button>Grab</button>
+  </form>
+  <form method="post" action="/poll" class="inline"><button class="quiet">Poll everything now</button></form>
+  #if(paused):<form method="post" action="/queue/resume" class="inline"><button>Resume fetching</button></form>#endif
+  #if(current):<span class="current">Fetching #(current)</span>#endif
+</section>
+
+#for(section in sections):
+<h2>#(section.title)</h2>
+#if(section.note != ""):<p class="note">#(section.note)</p>#endif
+<table class="videos">
+  <thead><tr><th>Video</th><th>Show</th><th>When</th><th>State</th><th>Why</th><th></th></tr></thead>
+  <tbody>
+  #for(v in section.rows):
+    <tr class="#(v.state)">
+      <td><a href="#(v.url)">#(v.title)</a><div class="id">#(v.id)#if(v.number != ""): · #(v.number)#endif</div></td>
+      <td><a href="/subscriptions/#(v.showID)">#(v.show)</a></td>
+      <td class="when">#(v.when)</td>
+      <td><span class="pill #(v.state)">#(v.stateLabel)</span></td>
+      <td class="why">#(v.why)</td>
+      <td class="actions">
+        #if(v.state == "failed" || v.state == "deferred" || v.state == "skipped"):
+          <form method="post" action="/videos/#(v.id)/retry"><button>#if(v.state == "skipped"):Want#else:Retry now#endif</button></form>
+        #endif
+        #if(v.state == "failed" || v.state == "deferred" || v.state == "wanted"):
+          <form method="post" action="/videos/#(v.id)/skip"><button class="quiet">Skip</button></form>
+        #endif
+      </td>
+    </tr>
+  #endfor
+  </tbody>
+</table>
+#endfor
+
+<h2>Journal</h2>
+#extend("entries")
+<p><a href="/journal">The whole journal</a></p>
+#endexport
+#endextend

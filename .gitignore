@@ -1,0 +1,10 @@
+.build/
+.swiftpm/
+*.xcodeproj
+data/
+.DS_Store
+.env
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.claude/settings.local.json

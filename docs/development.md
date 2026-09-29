@@ -1,0 +1,57 @@
+# Development
+
+Cylindarr is Swift 6 and Vapor 4. It builds and tests on macOS and Linux.
+
+## Tests
+
+```sh
+swift test
+```
+
+The whole suite runs in well under a second and needs no network, no yt-dlp, no ffmpeg, and no container: everything that decides anything lives in `CylindarrKit`, behind the seams described in [How it works](how-it-works.md), and the tests replay captured YouTube feeds, yt-dlp output, and yt-dlp error text.
+
+A new failure from YouTube or yt-dlp is best added as a fixture: capture the real stderr or JSON into `Tests/CylindarrKitTests/Fixtures` (its README says how each kind was captured), then write the test that reads it.
+
+## Running it locally
+
+You need yt-dlp, ffmpeg, and Deno on the path. With Homebrew: `brew install yt-dlp ffmpeg deno`. Use a current yt-dlp; an old one gets HTTP 403 on the video data.
+
+```sh
+mkdir -p /tmp/cylindarr/data /tmp/cylindarr/library
+CYLINDARR_DATA=/tmp/cylindarr/data \
+CYLINDARR_LIBRARY=/tmp/cylindarr/library \
+CYLINDARR_YTDLP=$(which yt-dlp) \
+swift run App serve --port 8295
+```
+
+Open `http://localhost:8295`. `CYLINDARR_SCHEDULER=off` runs the pages without polling, fetching, or the hourly checks, which is what you want when working on a page against a copy of a real database.
+
+On macOS there is no Quick Sync; encoding falls back to libx265, or choose "Do not encode".
+
+## Building the image
+
+```sh
+docker build -t cylindarr:latest .
+```
+
+The Dockerfile builds on `swift:6.3-noble` and runs on `ubuntu:24.04`, with yt-dlp, Deno, and the PO token plugin at pinned versions, each checked against its release's checksum. Moving one is a change to its `ARG` line.
+
+## Layout
+
+| Path | What |
+|---|---|
+| `Sources/CylindarrKit/` | Every decision. `Domain/` (states, subscriptions, the journal), `Rules/`, `Library/` (naming, numbering, NFOs, encoding, adoption), `YouTube/` (identifiers, feeds, yt-dlp's JSON, failure classification), `Pipelines/`, `Access/` (cookies), `Seams/` |
+| `Sources/CylindarrSystem/` | yt-dlp and ffmpeg as processes; the filesystem |
+| `Sources/App/` | The Vapor service: routes, pages, models, the scheduler |
+| `Resources/Views/` | Leaf templates |
+| `Public/` | The style sheet, the theme script, and the icons |
+| `Tests/` | The suites, and their fixtures |
+| `docs/` | These documents |
+
+## Conventions
+
+- **Every unit of work writes one journal entry**, and nothing else prints. A new verb goes in `Journal.swift`.
+- **A failure is a state with a cause.** A new way to fail gets a cause in `VideoState.swift` and a line in `FailureClassifier`, with the real error text as a fixture.
+- **Comments say why.** What the code does is in the code; the comment is for the reason, and for what went wrong when it was done the obvious way.
+- **The pages are plain HTML forms**, one small script for the theme switch, and no build step. Leaf reads a `#` followed by a name as a tag, so colours live in the style sheet rather than in templates.
+- **Colours** are the custom properties at the top of `Public/cylindarr.css`, dark and light. See [Brand](brand.md).

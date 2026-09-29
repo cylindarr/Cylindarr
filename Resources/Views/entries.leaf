@@ -1,0 +1,7 @@
+<table class="journal">
+  <tbody>
+  #for(e in entries):
+    <tr class="#(e.outcome)"><td class="when">#(e.at)</td><td>#(e.verb)</td><td>#(e.noun)</td><td>#(e.subject)</td><td><span class="pill #(e.outcome)">#(e.outcome)</span></td><td class="why">#(e.detail)</td></tr>
+  #endfor
+  </tbody>
+</table>

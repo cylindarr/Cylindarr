@@ -1,0 +1,17 @@
+#extend("base"):
+#export("title"):Adoption plan#endexport
+#export("body"):
+<h1>Adoption plan for #(source)</h1>
+<table class="subs"><tbody>
+#for(l in summary):<tr><td>#(l.label)</td><td>#(l.count)</td></tr>#endfor
+</tbody></table>
+<p>#(batches) videos, #(gigabytes) GB to move. Moves within one filesystem are renames; across filesystems each file is copied, its size checked, and only then is the original removed.</p>
+#if(count(problems) > 0):<h2>Not adopted, and why</h2><ul>#for(p in problems):<li>#(p)</li>#endfor</ul>#endif
+#if(count(debris) > 0):<h2>Left behind by interrupted downloads</h2><p class="note">Not touched. Safe to delete by hand.</p><ul>#for(d in debris):<li><code>#(d)</code></li>#endfor</ul>#endif
+<h2>The first operations</h2>
+<pre class="plan">#for(s in sample):#(s)
+#endfor</pre>
+<form method="post" action="/adopt/run" onsubmit="return confirm('Run the adoption? Files will be moved.')"><button>Run the adoption</button></form>
+<p><a href="/adopt?source=#(source)">Back</a></p>
+#endexport
+#endextend

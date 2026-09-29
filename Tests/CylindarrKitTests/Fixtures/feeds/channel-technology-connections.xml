@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCy0tKL1T7wFoYcxCe0xjN6Q"/>
+ <id>yt:channel:y0tKL1T7wFoYcxCe0xjN6Q</id>
+ <yt:channelId>y0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+ <title>Technology Connections</title>
+ <link rel="alternate" href="https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q"/>
+ <author>
+  <name>Technology Connections</name>
+  <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+ </author>
+ <published>2014-11-09T21:54:10+00:00</published>
+ <entry>
+  <id>yt:video:0KoeY54M5VA</id>
+  <yt:videoId>0KoeY54M5VA</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Engines haven't been fully mechanical in decades - and that's good!</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=0KoeY54M5VA"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-09-24T16:57:27+00:00</published>
+  <updated>2026-09-26T07:03:18+00:00</updated>
+  <media:group>
+   <media:title>Engines haven't been fully mechanical in decades - and that's good!</media:title>
+   <media:content url="https://www.youtube.com/v/0KoeY54M5VA?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/0KoeY54M5VA/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Beep boop. Engine better now.
+There's now a playlist of all the engine management videos! So you can find all the earlier ones right here: https://www.youtube.com/playlist?list=PLQp5_w6Rc6sk
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, as well as folks in need in Chicagoland and beyond, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="31352" average="5.00" min="1" max="5"/>
+    <media:statistics views="1283896"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:F_7B2shTPPU</id>
+  <yt:videoId>F_7B2shTPPU</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>My water heater is cooler than yours</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=F_7B2shTPPU"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-08-21T17:27:01+00:00</published>
+  <updated>2026-09-17T21:18:09+00:00</updated>
+  <media:group>
+   <media:title>My water heater is cooler than yours</media:title>
+   <media:content url="https://www.youtube.com/v/F_7B2shTPPU?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i3.ytimg.com/vi/F_7B2shTPPU/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Cooly hot. Or hotly cool.
+Follow-up video:
+https://youtu.be/fHPCS8j3cRM
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, as well as folks in need in Chicagoland and beyond, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections
+
+00:00 intro
+03:55 Why my situation is… not ideal
+06:02 Installation quirks
+14:47 The upsides and why I did this
+22:24 But what about in winter?
+26:47 The math behind this
+31:10 The massive “catch” with 120V models
+38:12 Two minor issues I’ve had
+40:17 AO Smith’s so-far unique feature
+44:32 Weird nerd stuff and other nonsense</media:description>
+   <media:community>
+    <media:starRating count="44071" average="5.00" min="1" max="5"/>
+    <media:statistics views="1763223"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:_KWdCqpXB7A</id>
+  <yt:videoId>_KWdCqpXB7A</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Ceiling fans: the simple idea we keep screwing up</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=_KWdCqpXB7A"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-06-17T17:30:01+00:00</published>
+  <updated>2026-09-26T12:28:28+00:00</updated>
+  <media:group>
+   <media:title>Ceiling fans: the simple idea we keep screwing up</media:title>
+   <media:content url="https://www.youtube.com/v/_KWdCqpXB7A?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/_KWdCqpXB7A/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Make it breezy.
+Dan's video on Moss Ceiling Fans:
+https://www.youtube.com/watch?v=IVv5vWjwCx8
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, as well as folks in need in Chicagoland and beyond, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="97390" average="5.00" min="1" max="5"/>
+    <media:statistics views="3426219"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:KnUFH5GX_fI</id>
+  <yt:videoId>KnUFH5GX_fI</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Nobody understands the point of hybrid cars</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=KnUFH5GX_fI"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-05-06T15:35:14+00:00</published>
+  <updated>2026-09-18T01:03:40+00:00</updated>
+  <media:group>
+   <media:title>Nobody understands the point of hybrid cars</media:title>
+   <media:content url="https://www.youtube.com/v/KnUFH5GX_fI?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/KnUFH5GX_fI/hqdefault.jpg" width="480" height="360"/>
+   <media:description>It's a really good idea and everyone hating on it probably doesn't understand it.
+Links 'n' stuff:
+
+Here's Prof. John Kelly's excellent demo of the eCVT (the mentioned Weber Auto YouTube Channel)
+https://www.youtube.com/watch?v=ppyK3ZlUbtM
+
+And I linked in a card to Engineering Explained's demo, too, which may help those having a hard time wrapping their head around this:
+https://www.youtube.com/watch?v=dxmxIsoV_Xo
+
+Here's the Sights and Sounds video I mentioned:
+https://youtu.be/AtaG0PQYeVQ
+
+And here's a silly one telling anyone who will listen why they need to get over themselves and embrace the minivan:
+https://youtu.be/oEruzTKteRE
+
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections
+
+00:00 Intro
+03:31 The internal combustion engine and its flaws
+09:12 The Atkinson cycle engine
+14:04 What hybrid drivetrains unlock
+19:21 An operational overview of Toyota's hybrid system
+24:10 Conversion losses and why they're a problem
+28:24 Regenerative braking and other hybrid drivetrain benefits
+34:54 How it all works mechanically
+46:42 Series vs. Parallel hybrids
+51:22 A cool way to do AWD
+54:44 bloopers</media:description>
+   <media:community>
+    <media:starRating count="101238" average="5.00" min="1" max="5"/>
+    <media:statistics views="2878646"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:nXdVG45wveo</id>
+  <yt:videoId>nXdVG45wveo</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>The disappearing and unappreciated art of audible alerts</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=nXdVG45wveo"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-04-12T15:18:48+00:00</published>
+  <updated>2026-09-27T00:56:48+00:00</updated>
+  <media:group>
+   <media:title>The disappearing and unappreciated art of audible alerts</media:title>
+   <media:content url="https://www.youtube.com/v/nXdVG45wveo?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i3.ytimg.com/vi/nXdVG45wveo/hqdefault.jpg" width="480" height="360"/>
+   <media:description>A proverbial one, anyway.
+
+links 'n' stuff
+
+If you're interested in the resurrection of the Pebble, here's more info:
+https://repebble.com/
+
+The Slow Whoop promo record:
+https://www.youtube.com/watch?v=a2_kt7RW9bI
+
+My old video on elevator chimes:
+https://youtu.be/48hW-K7fQTM
+
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="57839" average="5.00" min="1" max="5"/>
+    <media:statistics views="1163163"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:mmCfOazZCNQ</id>
+  <yt:videoId>mmCfOazZCNQ</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Oil pressure is the only thing keeping an engine alive</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=mmCfOazZCNQ"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-03-21T15:39:02+00:00</published>
+  <updated>2026-09-18T07:36:15+00:00</updated>
+  <media:group>
+   <media:title>Oil pressure is the only thing keeping an engine alive</media:title>
+   <media:content url="https://www.youtube.com/v/mmCfOazZCNQ?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/mmCfOazZCNQ/hqdefault.jpg" width="480" height="360"/>
+   <media:description>What really grinds my gears is a lack of sufficient lubrication.
+
+links 'n' stuff
+The catalytic converter video (once there's a third video I'll make a true playlist)
+https://youtu.be/Aytf6ARcs8s
+
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="70582" average="5.00" min="1" max="5"/>
+    <media:statistics views="1785852"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:KtQ9nt2ZeGM</id>
+  <yt:videoId>KtQ9nt2ZeGM</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>You are being misled about renewable energy technology.</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=KtQ9nt2ZeGM"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2026-01-30T17:27:19+00:00</published>
+  <updated>2026-09-18T03:19:09+00:00</updated>
+  <media:group>
+   <media:title>You are being misled about renewable energy technology.</media:title>
+   <media:content url="https://www.youtube.com/v/KtQ9nt2ZeGM?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/KtQ9nt2ZeGM/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Let's learn and grow. New things are cool!
+Links 'n' stuff down below. Lots of links.
+
+First, the &quot;clean version.&quot; Please pass that around.
+https://youtu.be/Zgxb8I1nk2I
+
+Jerry Rig Everything's video on battery recycling
+https://www.youtube.com/watch?v=s2xrarUWVRQ
+
+If you'd like a legal argument from an actual lawyer which highlights the uniquely strange and unchecked powers we have given DHS and ICE, this is worth a watch. I am not being hyperbolic in saying that this is a serious problem we need to face head on through abolishment, not reform.
+https://www.youtube.com/watch?v=zkgNnbTrsgw
+ 
+Here are a couple of corn ethanol vs. solar land use studies. There are more if you'd like to look for them.
+https://news.cornell.edu/stories/2025/04/trading-some-corn-ethanol-land-solar-offers-tremendous-opportunity
+https://www.cleanwisconsin.org/wp-content/uploads/2023/01/Corn-Ethanol-Vs.-Solar-Analysis-V3-9-compressed.pdf
+
+I'm not gonna post links to my socials or my Patreon here.
+
+Take care of each other.
+
+00:00 Intro
+07:35 Some opening notes
+10:14 Cars and all the oil they use
+15:38 Photovoltaics and electric cars
+18:59 A cost and opportunity comparison
+22:33 Solar farms
+30:35 A discussion of land use
+38:29 A diversion on wind power
+41:17 The materials in solar panels
+50:52 What about the batteries?
+1:02:41 The reasons I made this video
+1:10:16 The reason I am who I am
+1:16:35 Who the liars are and what we need to do about them.</media:description>
+   <media:community>
+    <media:starRating count="306891" average="5.00" min="1" max="5"/>
+    <media:statistics views="4846003"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:tCVsyY5TRQI</id>
+  <yt:videoId>tCVsyY5TRQI</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>I made my whole-home humidifier slightly less terrifying</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=tCVsyY5TRQI"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-12-25T16:29:28+00:00</published>
+  <updated>2026-09-26T07:14:32+00:00</updated>
+  <media:group>
+   <media:title>I made my whole-home humidifier slightly less terrifying</media:title>
+   <media:content url="https://www.youtube.com/v/tCVsyY5TRQI?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/tCVsyY5TRQI/hqdefault.jpg" width="480" height="360"/>
+   <media:description>mm mm moist
+
+links 'n' stuff
+The HVAC sizing video
+https://youtu.be/DTsQjiPlksA
+
+My original video on humidifiers
+https://youtu.be/oHeehYYgl28
+
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? Unless you count this Christmas light tirade, that is. Anyway, that's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="32225" average="5.00" min="1" max="5"/>
+    <media:statistics views="871829"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:oy7BrKNmZAQ</id>
+  <yt:videoId>oy7BrKNmZAQ</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>It's the Christmas light video again - 2025 edition</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=oy7BrKNmZAQ"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-12-06T15:45:44+00:00</published>
+  <updated>2026-09-18T07:09:37+00:00</updated>
+  <media:group>
+   <media:title>It's the Christmas light video again - 2025 edition</media:title>
+   <media:content url="https://www.youtube.com/v/oy7BrKNmZAQ?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/oy7BrKNmZAQ/hqdefault.jpg" width="480" height="360"/>
+   <media:description>It's the most wonderful time of the year.
+https://tru-tone.com
+https://merryco.com
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? Unless you count this Christmas light tirade, that is. Anyway, that's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="67154" average="5.00" min="1" max="5"/>
+    <media:statistics views="1107874"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:INZybkX8tLI</id>
+  <yt:videoId>INZybkX8tLI</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>My car charger can boil water really fast</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=INZybkX8tLI"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-11-27T18:37:52+00:00</published>
+  <updated>2026-09-17T23:20:10+00:00</updated>
+  <media:group>
+   <media:title>My car charger can boil water really fast</media:title>
+   <media:content url="https://www.youtube.com/v/INZybkX8tLI?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/INZybkX8tLI/hqdefault.jpg" width="480" height="360"/>
+   <media:description>That title might be the best effort I can pull off.
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="62785" average="5.00" min="1" max="5"/>
+    <media:statistics views="1149253"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:8I4Jc-WLsrs</id>
+  <yt:videoId>8I4Jc-WLsrs</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>This cassette player is built into an 8-track cartridge</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=8I4Jc-WLsrs"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-11-20T17:02:29+00:00</published>
+  <updated>2026-09-18T03:07:44+00:00</updated>
+  <media:group>
+   <media:title>This cassette player is built into an 8-track cartridge</media:title>
+   <media:content url="https://www.youtube.com/v/8I4Jc-WLsrs?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/8I4Jc-WLsrs/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Cool tapes.
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="37368" average="5.00" min="1" max="5"/>
+    <media:statistics views="824860"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:DAX2_mPr9W8</id>
+  <yt:videoId>DAX2_mPr9W8</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>I was right about dishwasher pods, and now I can prove it</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=DAX2_mPr9W8"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-11-04T18:07:43+00:00</published>
+  <updated>2026-09-18T00:45:56+00:00</updated>
+  <media:group>
+   <media:title>I was right about dishwasher pods, and now I can prove it</media:title>
+   <media:content url="https://www.youtube.com/v/DAX2_mPr9W8?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i1.ytimg.com/vi/DAX2_mPr9W8/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Some &quot;innovations&quot; really are gimmicks after all.
+https://good.store/products/dishwasher-powder
+
+2nd channel video:
+https://youtu.be/WnBb3DLlVPw
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? Well, except maybe this one time? If you think socks for charity counts. Anyway, that's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections
+
+00:00 intro
+01:40 Why I insist on powders
+08:00 The story of how this got made
+09:39 ASTM testing and results
+16:12 The importance of purging cold water from the line
+21:46 A demonstration
+29:18 A surprise about the dishwasher
+35:36 The demo again, but with PRE-WASH DETERGENT
+39:27 Recap and outro</media:description>
+   <media:community>
+    <media:starRating count="142465" average="5.00" min="1" max="5"/>
+    <media:statistics views="3446778"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:ms8uu0zeU88</id>
+  <yt:videoId>ms8uu0zeU88</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Video projectors used to be ridiculously cool</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=ms8uu0zeU88"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-10-08T15:43:33+00:00</published>
+  <updated>2026-09-18T01:13:14+00:00</updated>
+  <media:group>
+   <media:title>Video projectors used to be ridiculously cool</media:title>
+   <media:content url="https://www.youtube.com/v/ms8uu0zeU88?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/ms8uu0zeU88/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Three of them. That's three times more than usual!
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? Well, except maybe this one time? If you think socks for charity counts. Anyway, that's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="90454" average="5.00" min="1" max="5"/>
+    <media:statistics views="2536032"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:Aytf6ARcs8s</id>
+  <yt:videoId>Aytf6ARcs8s</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Catalytic converters are simple, but getting them to work is not</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=Aytf6ARcs8s"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-10-01T15:23:12+00:00</published>
+  <updated>2026-09-18T02:06:59+00:00</updated>
+  <media:group>
+   <media:title>Catalytic converters are simple, but getting them to work is not</media:title>
+   <media:content url="https://www.youtube.com/v/Aytf6ARcs8s?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/Aytf6ARcs8s/hqdefault.jpg" width="480" height="360"/>
+   <media:description>It's catalactually a pretty cool idea.
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. Thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="85844" average="5.00" min="1" max="5"/>
+    <media:statistics views="1854064"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:JzClLWL-Eys</id>
+  <yt:videoId>JzClLWL-Eys</yt:videoId>
+  <yt:channelId>UCy0tKL1T7wFoYcxCe0xjN6Q</yt:channelId>
+  <title>Desiccant dehumidifiers are fascinating... but not for everyone</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=JzClLWL-Eys"/>
+  <author>
+   <name>Technology Connections</name>
+   <uri>https://www.youtube.com/channel/UCy0tKL1T7wFoYcxCe0xjN6Q</uri>
+  </author>
+  <published>2025-08-31T15:30:47+00:00</published>
+  <updated>2026-09-18T02:19:24+00:00</updated>
+  <media:group>
+   <media:title>Desiccant dehumidifiers are fascinating... but not for everyone</media:title>
+   <media:content url="https://www.youtube.com/v/JzClLWL-Eys?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i3.ytimg.com/vi/JzClLWL-Eys/hqdefault.jpg" width="480" height="360"/>
+   <media:description>A whole new meaning to &quot;spin dry&quot;
+Connextras experiment: https://youtu.be/0xLzDF7PZW8
+Original video: https://youtu.be/j_QfX0SYCE8
+
+Other stuff:
+Technology Connections on Bluesky:
+https://bsky.app/profile/techconnectify.bsky.social
+
+Technology Connections on Mastodon:
+https://mas.to/@TechConnectify
+
+Have you ever noticed that I've never done that whole influencer thing? That's all thanks to people like you! Viewer support through Patreon keeps this channel independent and possible. If you'd like to join the amazing folks who fund my work, check out the link below. There's some exciting stuff coming soon! And thank you!
+https://www.patreon.com/technologyconnections</media:description>
+   <media:community>
+    <media:starRating count="65285" average="5.00" min="1" max="5"/>
+    <media:statistics views="1899874"/>
+   </media:community>
+  </media:group>
+ </entry>
+</feed>
