@@ -16,7 +16,7 @@
   <tbody>
   #for(s in subscriptions):
     <tr class="#if(!s.enabled):off#endif">
-      <td><a href="/subscriptions/#(s.id)">#(s.name)</a><div class="id">#(s.kind) #(s.youtubeID)#if(s.grabList): · grab list#endif#if(!s.enabled): · off#endif</div></td>
+      <td><a href="/subscriptions/#(s.id)">#(s.name)</a><div class="id"><a class="out" href="#(s.youtubeURL)" target="_blank" rel="noopener">#(s.kind) #(s.youtubeID)</a>#if(s.grabList): · grab list#endif#if(!s.enabled): · off#endif</div></td>
       <td>#(s.placed)</td><td>#(s.waiting)</td><td class="#if(s.failed > 0):bad#endif">#(s.failed)</td>
       <td class="when">#(s.lastPolled)#if(s.feedFailures > 0): · feed failed #(s.feedFailures)×#endif</td>
     </tr>

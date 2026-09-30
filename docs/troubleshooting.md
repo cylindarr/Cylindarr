@@ -4,7 +4,7 @@ Start with the overview. The access line at the top says whether YouTube is answ
 
 ## The journal
 
-Everything Cylindarr does is one line in the journal: a verb, what it was done to, the outcome, and a detail. The Journal page shows it with filters, and the same lines are the container's log:
+Everything Cylindarr does is one line in the journal: a verb, what it was done to, the outcome, and a detail. The Journal page shows it with filters. Each line's subject links to what it is about (a video to its row on its show's page, a show to its page, cookies or a media server to their settings), with a YouTube link beside videos and shows, and video ids in the detail link to their rows. The same lines are the container's log:
 
 ```sh
 docker logs -f cylindarr

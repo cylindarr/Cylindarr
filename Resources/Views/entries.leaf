@@ -1,7 +1,7 @@
 <table class="journal">
   <tbody>
   #for(e in entries):
-    <tr class="#(e.outcome)"><td class="when">#(e.at)</td><td>#(e.verb)</td><td>#(e.noun)</td><td>#(e.subject)</td><td><span class="pill #(e.outcome)">#(e.outcome)</span></td><td class="why">#(e.detail)</td></tr>
+    <tr class="#(e.outcome)"><td class="when">#(e.at)</td><td>#(e.verb)</td><td>#(e.noun)</td><td>#if(e.subjectHref != ""):<a href="#(e.subjectHref)">#(e.subject)</a>#else:#(e.subject)#endif#if(e.youtube != ""): <a class="out aside" href="#(e.youtube)" target="_blank" rel="noopener">YouTube</a>#endif</td><td><span class="pill #(e.outcome)">#(e.outcome)</span></td><td class="why">#for(d in e.detail):#if(d.href != ""):<a href="#(d.href)">#(d.text)</a>#else:#(d.text)#endif#endfor</td></tr>
   #endfor
   </tbody>
 </table>

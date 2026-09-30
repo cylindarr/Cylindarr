@@ -2,7 +2,7 @@
 #export("title"):Overview#endexport
 #export("body"):
 #extend("banners")
-<section class="access">
+<section class="access" id="access">
   #for(a in access):<span class="#(a.state)"><b>#(a.part)</b> #(a.detail)</span>#endfor
   <span class="when">#(accessChecked)</span>
   <form method="post" action="/access/verify" class="inline"><button class="quiet">Check now</button></form>
@@ -22,7 +22,7 @@
   </form>
   <form method="post" action="/poll" class="inline"><button class="quiet">Poll everything now</button></form>
   #if(paused):<form method="post" action="/queue/resume" class="inline"><button>Resume fetching</button></form>#endif
-  #if(current):<span class="current">Fetching #(current)</span>#endif
+  #if(current):<span class="current">Fetching #if(currentHref != ""):<a href="#(currentHref)">#(current)</a>#else:#(current)#endif <a class="out aside" href="https://www.youtube.com/watch?v=#(current)" target="_blank" rel="noopener">YouTube</a></span>#endif
 </section>
 
 #for(section in sections):
@@ -32,8 +32,8 @@
   <thead><tr><th>Video</th><th>Show</th><th>When</th><th>State</th><th>Why</th><th></th></tr></thead>
   <tbody>
   #for(v in section.rows):
-    <tr class="#(v.state)">
-      <td><a href="#(v.url)">#(v.title)</a><div class="id">#(v.id)#if(v.number != ""): · #(v.number)#endif</div></td>
+    <tr class="#(v.state)" id="v-#(v.id)">
+      <td><a class="out" href="#(v.url)" target="_blank" rel="noopener">#(v.title)</a><div class="id"><a href="#(v.href)">#(v.id)</a>#if(v.number != ""): · #(v.number)#endif</div></td>
       <td><a href="/subscriptions/#(v.showID)">#(v.show)</a></td>
       <td class="when">#(v.when)</td>
       <td><span class="pill #(v.state)">#(v.stateLabel)</span></td>

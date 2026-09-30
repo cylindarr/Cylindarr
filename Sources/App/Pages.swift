@@ -16,6 +16,8 @@ enum Pages {
         let when: String
         let number: String
         let url: String
+        /// Its row on its subscription's page.
+        let href: String
     }
 
     struct EntryRow: Content {
@@ -23,13 +25,20 @@ enum Pages {
         let verb: String
         let noun: String
         let subject: String
+        /// The subject's page in Cylindarr and on YouTube, either blank.
+        let subjectHref: String
+        let youtube: String
         let outcome: String
-        let detail: String
+        let detail: [Links.Segment]
     }
 
     struct Banner: Content {
         let level: String
         let text: String
+        /// A link after the text, inside Cylindarr, and one to YouTube.
+        var link: String = ""
+        var href: String = ""
+        var youtube: String = ""
     }
 
     static let short: DateFormatter = {
@@ -71,7 +80,7 @@ enum Pages {
         if when.isEmpty, let u = r.uploaded { when = day.string(from: u) }
         return VideoRow(id: r.id, title: r.title, show: names[r.subscriptionID] ?? "", showID: r.subscriptionID.uuidString,
                         state: r.state.name, stateLabel: stateLabel(r.state.name), why: why, when: when, number: r.number?.description ?? "",
-                        url: "https://www.youtube.com/watch?v=\(r.id)")
+                        url: Links.youtube(video: r.id), href: Links.video(r.id, in: r.subscriptionID))
     }
 
     static func names(_ db: Database) async throws -> [UUID: String] {
@@ -81,8 +90,12 @@ enum Pages {
     static func entries(_ db: Database, limit: Int, filter: String? = nil) async throws -> [EntryRow] {
         var q = EntryModel.query(on: db).sort(\.$at, .descending).limit(limit)
         if let f = filter, !f.isEmpty { q = q.filter(\.$outcome == f) }
-        return try await q.all().map {
-            EntryRow(at: short.string(from: $0.at), verb: $0.verb, noun: $0.noun, subject: $0.subject, outcome: $0.outcome, detail: $0.detail)
+        let rows = try await q.all()
+        let index = try await Links.Index.build(for: rows, on: db)
+        return rows.map {
+            let links = index.subject($0.subject, noun: $0.noun, verb: $0.verb)
+            return EntryRow(at: short.string(from: $0.at), verb: $0.verb, noun: $0.noun, subject: $0.subject,
+                            subjectHref: links.href, youtube: links.youtube, outcome: $0.outcome, detail: index.detail($0.detail))
         }
     }
 
@@ -101,6 +114,7 @@ enum Pages {
         let entries: [EntryRow]
         let paused: Bool
         let current: String?
+        let currentHref: String
         let access: [AccessRow]
         let accessChecked: String
     }
@@ -142,8 +156,15 @@ enum Pages {
         let status = await req.application.engine.status
         var banners: [Banner] = []
         if let e = req.query[String.self, at: "error"] { banners.append(Banner(level: "bad", text: e)) }
-        if let g = req.query[String.self, at: "grabbed"] { banners.append(Banner(level: "ok", text: "Wanted \(g); it will be filed under Grabs.")) }
-        if !status.fetching { banners.append(Banner(level: "warn", text: "Fetching is switched off in settings. New videos are noticed and wait.")) }
+        if let g = req.query[String.self, at: "grabbed"], Identifier.isVideoID(g) {
+            let sub = try await VideoModel.find(g, on: db)?.subscriptionID
+            banners.append(Banner(level: "ok", text: "Wanted \(g); it will be filed under Grabs.", link: sub == nil ? "" : "Its row",
+                                  href: sub.map { Links.video(g, in: $0) } ?? "", youtube: Links.youtube(video: g)))
+        }
+        if !status.fetching {
+            banners.append(Banner(level: "warn", text: "Fetching is switched off in settings. New videos are noticed and wait.",
+                                  link: "Settings", href: "/settings"))
+        }
         if !status.gateOpen, let until = status.pausedUntil {
             let why: String
             switch status.reason {
@@ -152,11 +173,13 @@ enum Pages {
             case .rateLimited: why = "YouTube is rate-limiting this address."
             default: why = status.reason?.rawValue ?? ""
             }
-            banners.append(Banner(level: "bad", text: "Fetching is paused until \(short.string(from: until)). \(why)"))
+            banners.append(Banner(level: "bad", text: "Fetching is paused until \(short.string(from: until)). \(why)",
+                                  link: "The access check", href: "/#access"))
         }
         let settings = await AppSettings.load(db)
         if settings.potProvider.isEmpty {
-            banners.append(Banner(level: "warn", text: "No PO token provider is configured, so YouTube's bot check comes sooner."))
+            banners.append(Banner(level: "warn", text: "No PO token provider is configured, so YouTube's bot check comes sooner.",
+                                  link: "Settings", href: "/settings#youtube"))
         }
         var sections: [Section] = []
         let failed = try await list("failed", limit: 50)
@@ -169,6 +192,7 @@ enum Pages {
         return Overview(
             version: cylindarrVersion, banners: banners, counts: counts, needYou: (counts["failed"] ?? 0) > 0,
             sections: sections, entries: try await entries(db, limit: 25), paused: !status.gateOpen, current: status.current,
+            currentHref: try await status.current.asyncMap { id in try await VideoModel.find(id, on: db).map { Links.video(id, in: $0.subscriptionID) } } ?? "",
             access: accessRows(await req.application.engine.lastReport),
             accessChecked: (await req.application.engine.lastReport).map { "checked " + short.string(from: $0.at) } ?? "")
     }
@@ -185,6 +209,7 @@ enum Pages {
         let failed: Int
         let lastPolled: String
         let feedFailures: Int
+        let youtubeURL: String
     }
 
     struct SubscriptionsPage: Content {
@@ -203,7 +228,8 @@ enum Pages {
             out.append(SubscriptionSummary(
                 id: id.uuidString, name: m.name, kind: m.kind, youtubeID: m.youtubeID, enabled: m.enabled, grabList: m.isGrabList,
                 placed: try await count(["placed"]), waiting: try await count(["wanted", "deferred"]), failed: try await count(["failed"]),
-                lastPolled: m.lastPolled.map { short.string(from: $0) } ?? "never", feedFailures: m.feedFailures))
+                lastPolled: m.lastPolled.map { short.string(from: $0) } ?? "never", feedFailures: m.feedFailures,
+                youtubeURL: Links.youtube(m.kind, m.youtubeID)))
         }
         var banners: [Banner] = []
         if let e = req.query[String.self, at: "error"] { banners.append(Banner(level: "bad", text: e)) }
@@ -230,7 +256,7 @@ enum Pages {
         let n = [s.id: s.name]
         return SubscriptionPage(
             version: cylindarrVersion, id: s.id.uuidString, name: s.name, kind: s.kind.rawValue, youtubeID: s.youtubeID,
-            youtubeURL: s.kind == .channel ? "https://www.youtube.com/channel/\(s.youtubeID)" : "https://www.youtube.com/playlist?list=\(s.youtubeID)",
+            youtubeURL: Links.youtube(s.kind.rawValue, s.youtubeID),
             enabled: s.enabled, grabList: s.isGrabList, rules: RuleForm(s), videos: rows.map { row($0, names: n) })
     }
 
@@ -431,5 +457,12 @@ struct SettingsForm: Content {
         s.jellyfinPathMap = f.jellyfinPathMap ?? s.jellyfinPathMap
         s.ntfyURL = f.ntfyURL
         s.autoUpdate = f.autoUpdate == "on"
+    }
+}
+
+extension Optional {
+    func asyncMap<T>(_ f: (Wrapped) async throws -> T?) async rethrows -> T? {
+        guard let w = self else { return nil }
+        return try await f(w)
     }
 }

@@ -2,7 +2,7 @@
 #export("title"):#(name)#endexport
 #export("body"):
 <h1>#(name)</h1>
-<p class="id"><a href="#(youtubeURL)">#(kind) #(youtubeID)</a>#if(grabList): · grab list: every video is filed under Grabs as a film#endif</p>
+<p class="id">#if(youtubeURL != ""):<a class="out" href="#(youtubeURL)" target="_blank" rel="noopener">#(kind) #(youtubeID) on YouTube</a>#else:One-off grabs#endif#if(grabList): · grab list: every video is filed under Grabs as a film#endif</p>
 <form method="post" action="/subscriptions/#(id)/poll" class="inline"><button>Poll now</button></form>
 <form method="post" action="/subscriptions/#(id)/enumerate" class="inline"><button class="quiet">List the whole #(kind)</button></form>
 <p class="note">A poll sees only the newest 15 to 20 videos. Listing the whole #(kind) finds everything older that the rules below want, including videos skipped before for their date; it runs in the background and the journal says when it is done. Clear the cutoff first to fetch the whole back catalogue.</p>
@@ -47,8 +47,8 @@
   <thead><tr><th>Video</th><th>Show</th><th>When</th><th>State</th><th>Why</th><th></th></tr></thead>
   <tbody>
   #for(v in videos):
-    <tr class="#(v.state)">
-      <td><a href="#(v.url)">#(v.title)</a><div class="id">#(v.id)#if(v.number != ""): · #(v.number)#endif</div></td>
+    <tr class="#(v.state)" id="v-#(v.id)">
+      <td><a class="out" href="#(v.url)" target="_blank" rel="noopener">#(v.title)</a><div class="id"><a href="#(v.href)">#(v.id)</a>#if(v.number != ""): · #(v.number)#endif</div></td>
       <td><a href="/subscriptions/#(v.showID)">#(v.show)</a></td>
       <td class="when">#(v.when)</td>
       <td><span class="pill #(v.state)">#(v.stateLabel)</span></td>

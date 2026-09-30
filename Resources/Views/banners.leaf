@@ -1,1 +1,1 @@
-#for(b in banners):<div class="banner #(b.level)">#(b.text)</div>#endfor
+#for(b in banners):<div class="banner #(b.level)">#(b.text)#if(b.href != ""): <a href="#(b.href)">#(b.link)</a>#endif#if(b.youtube != ""): <a class="out" href="#(b.youtube)" target="_blank" rel="noopener">YouTube</a>#endif</div>#endfor

@@ -11,12 +11,12 @@
   <label>Pause fetching below <input name="minFreeGB" value="#(s.minFreeGB)" size="5"> GB free</label>
   <label>Poll every <input name="pollMinutes" value="#(s.pollMinutes)" size="4"> minutes</label>
   <label><input type="checkbox" name="fetching" #if(s.fetching):checked#endif> Fetch wanted videos</label>
-  <h2>Reaching YouTube</h2>
+  <h2 id="youtube">Reaching YouTube</h2>
   <label>yt-dlp <input name="ytdlpPath" value="#(s.ytdlpPath)" size="40"></label>
   <label><input type="checkbox" name="autoUpdate" #if(s.autoUpdate):checked#endif> Update yt-dlp daily (checksum checked, switched only after the access check passes)</label>
   <label>PO token provider <input name="potProvider" value="#(s.potProvider)" size="32" placeholder="http://pot:4416"></label>
   <label>Proxy for yt-dlp <input name="proxy" value="#(s.proxy)" size="32" placeholder="socks5://user:password@host:1080 (blank for direct)"></label>
-  <h2>Media servers</h2>
+  <h2 id="media-servers">Media servers</h2>
   <label>Plex URL <input name="plexURL" value="#(s.plexURL)" size="32" placeholder="http://host.docker.internal:32400"></label>
   <label>Plex token <input name="plexToken" type="password" placeholder="unchanged" size="24"></label>
   <label>Plex TV section id <input name="plexSection" value="#(s.plexSection)" size="4"></label>
@@ -30,7 +30,7 @@
   <button>Save settings</button>
 </form>
 
-<h2>Cookies</h2>
+<h2 id="cookies">Cookies</h2>
 <p>#(cookies)</p>
 <p class="note">So they last: open a private window, sign in to YouTube with the account made for this, export <code>cookies.txt</code> from that window, then close it without using YouTube there again. A session left open in a browser rotates and the exported copy stops working within days. Cookies are used only when a video needs them.</p>
 <p class="note">Only the YouTube and Google cookies in the file are kept; the rest of an export is discarded.</p>
@@ -44,7 +44,7 @@
 </form>
 #endif
 
-<h2>Encoding</h2>
+<h2 id="encoding">Encoding</h2>
 <p>#if(encodes):Every download is encoded to #(encoder), with its SponsorBlock segments cut in the same pass.#else:Downloads are placed as YouTube served them, without an encode. SponsorBlock segments are marked as chapters, not cut.#endif</p>
 <form method="post" action="/settings/encoding" class="rules">
   <label>Encoder <select name="encoder">#for(c in encoderChoices):<option value="#(c.value)" #if(c.selected):selected#endif>#(c.label)</option>#endfor</select></label>
