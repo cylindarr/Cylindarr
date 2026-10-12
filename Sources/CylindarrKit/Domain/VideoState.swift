@@ -134,17 +134,31 @@ public enum FailCause: String, Codable, Sendable, CaseIterable {
     case geoBlocked = "geo-blocked"
     case formatUnavailable = "format-unavailable"
     case gaveUp = "gave-up"
+    /// No yt-dlp extractor takes the URL.
+    case unsupported
+    /// The site wants an account, and grabs from sites other than YouTube
+    /// are fetched signed out.
+    case needsSignIn = "needs-sign-in"
+    /// Audio only (SoundCloud, Bandcamp, a podcast). Grabs is a film library.
+    case notVideo = "not-video"
+    /// A playlist, channel or album on a site other than YouTube; grabs take
+    /// one video, and only YouTube's can be followed.
+    case notOneVideo = "not-one-video"
     case unrecognised
 
     public var sentence: String {
         switch self {
-        case .removed: "removed from YouTube, or its account was terminated"
+        case .removed: "removed, or its account was terminated"
         case .privateVideo: "private"
         case .ageRestricted: "age-restricted, and the cookies' account cannot see it"
         case .membersOnly: "members only"
         case .geoBlocked: "not available in this country"
         case .formatUnavailable: "no format matched, even the fallback"
         case .gaveUp: "deferred too many times"
+        case .unsupported: "not something yt-dlp can fetch"
+        case .needsSignIn: "the site wants an account, and Cylindarr fetches from it signed out"
+        case .notVideo: "audio only, and Grabs keeps videos"
+        case .notOneVideo: "a playlist or channel, not one video; only YouTube's can be followed"
         case .unrecognised: "yt-dlp failed in a way Cylindarr does not recognise"
         }
     }

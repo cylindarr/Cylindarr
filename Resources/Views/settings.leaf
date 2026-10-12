@@ -44,6 +44,24 @@
 </form>
 #endif
 
+<h2 id="apps">Connect an app</h2>
+<p>The iPhone and Mac apps and the browser extension grab with this address and key. On an iPhone, scan the code with the camera. On a Mac, open the pairing link, or paste it into the app or the extension's options.</p>
+<div class="pairing">
+  <div class="qr" data-qr="#(pairingLink)" role="img" aria-label="QR code for the pairing link"></div>
+  <dl>
+    <dt>Address</dt><dd><code>#(serverURL)</code></dd>
+    <dt>API key</dt><dd><code>#(s.apiKey)</code></dd>
+    <dt>Pairing link</dt><dd><a href="#(pairingLink)">Open in the app</a> · <button type="button" class="quiet" data-copy="#(pairingLink)">Copy</button></dd>
+  </dl>
+</div>
+<p class="note">The key lets whoever holds it queue downloads and follow channels. Every call to <code>/api/v1/</code> needs it, whether or not a password is set.</p>
+#if(keyPinned):<p class="note">The key is set by <code>CYLINDARR_API_KEY</code>.</p>#else:
+<form method="post" action="/settings/api-key" class="danger" onsubmit="return confirm('Make a new key? Every paired app and extension stops working until it is paired again.')">
+  <button class="quiet">Make a new key</button>
+</form>
+#endif
+<script src="/qrcode.js"></script>
+
 <h2 id="encoding">Encoding</h2>
 <p>#if(encodes):Every download is encoded to #(encoder), with its SponsorBlock segments cut in the same pass.#else:Downloads are placed as YouTube served them, without an encode. SponsorBlock segments are marked as chapters, not cut.#endif</p>
 <form method="post" action="/settings/encoding" class="rules">

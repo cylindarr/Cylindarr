@@ -5,7 +5,13 @@ import CylindarrKit
 /// Where each thing on the pages links to: inside Cylindarr, the page that
 /// shows it; outside, its page on YouTube.
 enum Links {
-    static func youtube(video id: String) -> String { "https://www.youtube.com/watch?v=\(id)" }
+    /// Blank for a key from another site, whose page only its record knows.
+    static func youtube(video id: String) -> String {
+        VideoKey.isYouTube(id) ? "https://www.youtube.com/watch?v=\(id)" : ""
+    }
+
+    /// A video's own page: YouTube's, or the other site's a grab came from.
+    static func source(_ r: VideoRecord) -> String { r.sourceURL ?? youtube(video: r.id) }
 
     /// A subscription's page on YouTube. Blank for the built-in Grabs list,
     /// which is not a YouTube object.
@@ -37,7 +43,7 @@ enum Links {
             for s in subs where byName[s.name] == nil { byName[s.name] = s }
             var candidates = Set<String>()
             for e in entries {
-                if Identifier.isVideoID(e.subject) { candidates.insert(e.subject) }
+                if VideoKey.isKey(e.subject) { candidates.insert(e.subject) }
                 candidates.formUnion(tokens(in: e.detail).map(\.1))
             }
             var videos: [String: UUID] = [:]

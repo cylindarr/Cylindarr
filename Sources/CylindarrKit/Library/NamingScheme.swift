@@ -72,10 +72,11 @@ public enum NamingScheme {
             directory: dir, media: "\(dir)/\(stem).mp4", nfo: "\(dir)/\(stem).nfo", thumbnail: "\(dir)/poster.jpg")
     }
 
-    /// The id in a file name Cylindarr, yt-dlp or anything following yt-dlp's
-    /// convention wrote: the last `[...]` holding an 11-character video id.
+    /// The key in a file name Cylindarr, yt-dlp or anything following yt-dlp's
+    /// convention wrote: the last `[...]` holding an 11-character YouTube id,
+    /// or a `site.id` key for a video from another site (see VideoKey).
     public static func videoID(inFileName name: String) -> String? {
-        let pattern = #"\[([A-Za-z0-9_-]{11})\]"#
+        let pattern = #"\[([A-Za-z0-9_-]{11}|[a-z][a-z0-9]{2,}\.[A-Za-z0-9_-]{3,})\]"#
         guard let regex = try? NSRegularExpression(pattern: pattern) else { return nil }
         let ns = name as NSString
         guard let match = regex.matches(in: name, range: NSRange(location: 0, length: ns.length)).last else {

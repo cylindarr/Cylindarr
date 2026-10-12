@@ -4,6 +4,7 @@ import CylindarrKit
 
 func routes(_ app: Application) throws {
     adoptRoutes(app)
+    apiRoutes(app)
     app.get("health") { req async -> Response in
         let body = #"{"status":"ok","version":"\#(cylindarrVersion)"}"#
         return Response(status: .ok, headers: ["Content-Type": "application/json"], body: .init(string: body))
@@ -86,12 +87,10 @@ func routes(_ app: Application) throws {
     app.post("grab") { req async throws -> Response in
         struct Form: Content { var url: String }
         let form = try req.content.decode(Form.self)
-        do {
-            let id = try await SubscriptionResolver(req: req).grab(form.url)
-            return req.redirect(to: "/?grabbed=\(id)")
-        } catch let e as SubscriptionResolver.Failure {
-            return req.redirect(to: "/?error=" + (e.message.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""))
-        }
+        let answer = try await GrabService(req: req).grab(form.url)
+        if answer.outcome == .queued, let key = answer.grab?.key { return req.redirect(to: "/?grabbed=\(key)") }
+        let message = answer.outcome == .followable ? "That's a YouTube channel or playlist. Follow it on the Subscriptions page." : answer.message
+        return req.redirect(to: "/?error=" + (message.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""))
     }
 
     app.post("videos", ":id", ":action") { req async throws -> Response in
@@ -188,6 +187,15 @@ func routes(_ app: Application) throws {
         // live instead of waiting for the hourly check.
         _ = await req.application.engine.verifyNow()
         return req.redirect(to: "/settings")
+    }
+
+    app.post("settings", "api-key") { req async throws -> Response in
+        var s = await AppSettings.load(req.db)
+        s.apiKey = AppSettings.newAPIKey()
+        try await s.save(req.db)
+        await req.application.engine.reload()
+        req.application.journal.record(Entry(verb: .configure, noun: .system, subject: "settings", outcome: .ok, detail: "new API key"))
+        return req.redirect(to: "/settings#apps")
     }
 
     app.post("settings", "cookies", "remove") { req async throws -> Response in

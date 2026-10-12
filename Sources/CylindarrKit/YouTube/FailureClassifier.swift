@@ -28,6 +28,12 @@ public enum FailureClassifier {
         ("members-only", .needsCookies(then: .membersOnly)),
         ("Join this channel", .needsCookies(then: .membersOnly)),
         ("available to this channel's members", .needsCookies(then: .membersOnly)),
+        // Other sites' sign-in walls. yt-dlp's login hint mentions
+        // --cookies too, which is why the bot check above comes first.
+        ("only available for registered users", .failed(.needsSignIn)),
+        ("provide account credentials", .failed(.needsSignIn)),
+        ("[Ll]ogin required", .failed(.needsSignIn)),
+        ("Unsupported URL", .failed(.unsupported)),
         ("Premieres in", .deferred(.premiere)),
         ("Premiere will begin", .deferred(.premiere)),
         ("live event will begin", .deferred(.premiere)),
@@ -41,6 +47,9 @@ public enum FailureClassifier {
         ("Requested format is not available", .failed(.formatUnavailable)),
         ("This video is unavailable", .failed(.removed)),
         ("Video unavailable", .failed(.removed)),
+        // A page that is not there, on any site. Before "Unable to download
+        // webpage", which a 404 also says.
+        ("HTTP Error 404", .failed(.removed)),
         ("Temporary failure in name resolution", .deferred(.network)),
         ("timed out", .deferred(.network)),
         ("Connection reset", .deferred(.network)),

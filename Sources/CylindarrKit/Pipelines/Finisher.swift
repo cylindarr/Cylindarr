@@ -71,10 +71,12 @@ public struct Finisher: Sendable {
         var number: EpisodeNumber?
         if sub.isGrabList {
             let year = EpisodeNumbering.calendar.component(.year, from: uploaded)
-            paths = NamingScheme.grab(title: info.title, year: year, videoID: info.id)
+            // The record's key, not yt-dlp's id: from another site, the key
+            // carries the site (see VideoKey).
+            paths = NamingScheme.grab(title: info.title, year: year, videoID: record.id)
             nfo = NFOWriter.movie(.init(title: info.title, premiered: uploaded, plot: info.description,
                                         runtimeSeconds: info.duration.map { Int($0) }, studio: info.channel ?? info.uploader,
-                                        videoID: info.id))
+                                        videoID: record.id))
         } else {
             let taken = (try? await store.numbers(inShow: sub.name)) ?? []
             let n = record.number ?? EpisodeNumbering.assign([.init(id: info.id, uploaded: uploaded)], taken: taken)[info.id]!

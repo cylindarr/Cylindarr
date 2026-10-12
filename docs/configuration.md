@@ -42,6 +42,10 @@ Cookies are uploaded on the same page. See [Cookies](youtube-access.md#cookies).
 
 An [ntfy](https://ntfy.sh) topic URL. Cylindarr posts when fetching pauses because YouTube refused, when the cookies stop working, and a week before they expire.
 
+### Connect an app
+
+The server's address, its API key, a QR code and a pairing link, for the [apps and the browser extension](apps.md#pairing). **Make a new key** replaces the key; everything paired with the old one has to be paired again.
+
 ### Encoding
 
 The encoder and the quality number. See [Encoding](encoding.md). "Download the library again" queues every placed video to be downloaded and encoded again, which is what you want after changing the encoder or quality; each keeps its episode number and its current file until the new one is ready, and new uploads go first.
@@ -59,7 +63,7 @@ Only a few have to be in the environment, because they are needed before the dat
 | `CYLINDARR_DATA` | Where the database, cookies, and yt-dlp updates live. `/app/data` in the image |
 | `CYLINDARR_PASSWORD` | Turns on the login. See [Passwords and exposure](install.md#passwords-and-exposure) |
 | `CYLINDARR_USERNAME` | The login's user name. `cylindarr` by default |
-| `CYLINDARR_PUBLIC_URL` | The address you reach Cylindarr at, such as `https://cylindarr.example.com`. Tapping a notification opens the page it is about |
+| `CYLINDARR_PUBLIC_URL` | The address you reach Cylindarr at, such as `https://cylindarr.example.com`. Tapping a notification opens the page it is about, and the pairing code on the settings page carries it |
 | `TZ` | The time zone for times on the pages and in the log |
 
 These set a page setting and fix it there:
@@ -77,6 +81,7 @@ These set a page setting and fix it there:
 | `CYLINDARR_JELLYFIN_PATH_MAP` | Jellyfin's path mapping |
 | `CYLINDARR_NTFY_URL` | The ntfy topic |
 | `CYLINDARR_ENCODER` | `auto`, `quicksync`, `vaapi`, `nvenc`, `software`, or `none` |
+| `CYLINDARR_API_KEY` | The API key the apps and the browser extension send. Made at first start when not set |
 
 Secrets (the Plex token, the Jellyfin key, a proxy password) are often easier to keep in an `.env` file than in the database; either works.
 

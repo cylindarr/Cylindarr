@@ -32,9 +32,13 @@ public struct FetchSettings: Sendable, Equatable {
 
 public enum FetchArguments {
     /// The whole yt-dlp command line for one video, into its own staging
-    /// folder, every file named for the id alone. Naming is Cylindarr's job,
-    /// not an output template's.
-    public static func build(videoID: String, rules: Rules, settings: FetchSettings, withCookies: Bool) -> [String] {
+    /// folder, every file named for its key alone. Naming is Cylindarr's job,
+    /// not an output template's. `sourceURL` is a grab's page on a site other
+    /// than YouTube, which gets none of the YouTube-only arguments: no
+    /// SponsorBlock, no PO tokens, and not the YouTube account's cookies.
+    public static func build(videoID: String, sourceURL: String? = nil, rules: Rules, settings: FetchSettings,
+                             withCookies: Bool) -> [String] {
+        let youtube = sourceURL == nil
         var a = [
             "--no-warnings", "--newline", "--no-progress", "--no-playlist", "--no-overwrites", "--no-mtime",
             "-f", FormatSelector.formatArgument(for: rules.quality, encodes: settings.encode.encodes),
@@ -44,9 +48,9 @@ public enum FetchArguments {
             "--embed-chapters", "--embed-metadata",
             "--sleep-requests", "1",
             "-P", settings.staging(for: videoID),
-            "-o", "%(id)s.%(ext)s",
+            "-o", "\(videoID).%(ext)s",
         ]
-        if let cutoff = rules.cutoff {
+        if youtube, let cutoff = rules.cutoff {
             // The exact cutoff, applied by yt-dlp after extraction and before
             // any download. A listing's dates are approximate.
             let c = EpisodeNumbering.calendar.dateComponents([.year, .month, .day], from: cutoff)
@@ -55,13 +59,13 @@ public enum FetchArguments {
         // Marked, never removed, by yt-dlp: marking puts the segments in the
         // info.json, and the Finisher cuts them while encoding (see Transcode
         // for why yt-dlp's own cut is not used).
-        if rules.sponsorBlock != .off, !rules.sponsorBlockCategories.isEmpty {
+        if youtube, rules.sponsorBlock != .off, !rules.sponsorBlockCategories.isEmpty {
             a += ["--sponsorblock-mark", rules.sponsorBlockCategories.joined(separator: ",")]
         }
         if let proxy = settings.proxy { a += ["--proxy", proxy] }
-        if let pot = settings.potProvider { a += ["--extractor-args", "youtubepot-bgutilhttp:base_url=\(pot)"] }
-        if withCookies, let cookies = settings.cookiesPath { a += ["--cookies", cookies] }
-        a.append("https://www.youtube.com/watch?v=\(videoID)")
+        if youtube, let pot = settings.potProvider { a += ["--extractor-args", "youtubepot-bgutilhttp:base_url=\(pot)"] }
+        if youtube, withCookies, let cookies = settings.cookiesPath { a += ["--cookies", cookies] }
+        a.append(sourceURL ?? "https://www.youtube.com/watch?v=\(videoID)")
         return a
     }
 
@@ -76,18 +80,10 @@ public enum FetchArguments {
             "--load-info-json", staging + "/\(videoID).info.json",
             "--write-subs", "--sub-langs", settings.subtitleLanguages.map { "\($0).*" }.joined(separator: ",") + ",-live_chat",
             "--convert-subs", "srt",
-            "-P", staging, "-o", "%(id)s.%(ext)s",
+            "-P", staging, "-o", "\(videoID).%(ext)s",
         ]
         if rules.autoCaptions { a.append("--write-auto-subs") }
         if let proxy = settings.proxy { a += ["--proxy", proxy] }
-        return a
-    }
-
-    /// For a one-off grab from anywhere yt-dlp reaches: the same command,
-    /// the URL as given.
-    public static func build(url: URL, id: String, rules: Rules, settings: FetchSettings) -> [String] {
-        var a = build(videoID: id, rules: rules, settings: settings, withCookies: false)
-        a[a.count - 1] = url.absoluteString
         return a
     }
 }
@@ -129,18 +125,20 @@ public struct Fetcher: Sendable {
         }
 
         try? files.createDirectory(staging)
-        var run = await ytdlp.run(FetchArguments.build(videoID: record.id, rules: sub.rules, settings: settings, withCookies: false))
+        var run = await ytdlp.run(FetchArguments.build(videoID: record.id, sourceURL: record.sourceURL, rules: sub.rules, settings: settings, withCookies: false))
         var usedCookies = false
-        if run.exitCode != 0, case .needsCookies = FailureClassifier.diagnose(stderr: run.stderr), settings.cookiesPath != nil {
+        // The cookie jar is YouTube's account; another site never gets it.
+        let cookiesHelp = settings.cookiesPath != nil && record.sourceURL == nil
+        if run.exitCode != 0, case .needsCookies = FailureClassifier.diagnose(stderr: run.stderr), cookiesHelp {
             usedCookies = true
-            run = await ytdlp.run(FetchArguments.build(videoID: record.id, rules: sub.rules, settings: settings, withCookies: true))
+            run = await ytdlp.run(FetchArguments.build(videoID: record.id, sourceURL: record.sourceURL, rules: sub.rules, settings: settings, withCookies: true))
         }
         // The bot check is also something signed-in cookies can get past; one
         // signed-in try per attempt, so the account is used only when needed.
         if run.exitCode != 0, !usedCookies, FailureClassifier.diagnose(stderr: run.stderr) == .deferred(.botCheck),
-           settings.cookiesPath != nil {
+           cookiesHelp {
             usedCookies = true
-            run = await ytdlp.run(FetchArguments.build(videoID: record.id, rules: sub.rules, settings: settings, withCookies: true))
+            run = await ytdlp.run(FetchArguments.build(videoID: record.id, sourceURL: record.sourceURL, rules: sub.rules, settings: settings, withCookies: true))
         }
 
         guard run.exitCode == 0 else {

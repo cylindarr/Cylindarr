@@ -59,7 +59,7 @@ Waiting and failed videos show on the overview and on their subscription's page,
 
 ## Grabs
 
-Paste a single video's URL into the box on the overview and press Grab. It is downloaded next and filed as a film under `Grabs/Title (Year) [id]/`. Grabs take YouTube videos only for now.
+Paste a single video's URL into the box on the overview and press Grab, or send it from the [apps or the browser extension](apps.md). It goes to the front of the queue and is filed as a film under `Grabs/Title (Year) [id]/`. A grab can come from any site yt-dlp supports; [Apps](apps.md#what-happens-after-a-grab) says what happens to links from other sites.
 
 ## Unfollowing
 

@@ -67,8 +67,9 @@ public protocol FileOps: Sendable {
 public protocol VideoStore: Sendable {
     func video(_ id: String) async throws -> VideoRecord?
     func save(_ record: VideoRecord) async throws
-    /// Wanted videos, and deferred ones whose time has come, oldest first;
-    /// videos never placed before those already placed and wanted again.
+    /// Wanted videos, and deferred ones whose time has come: grabs first,
+    /// then videos never placed before those already placed and wanted
+    /// again, oldest first within each.
     func due(at now: Date, limit: Int) async throws -> [VideoRecord]
     /// Episode numbers already placed in a show.
     func numbers(inShow show: String) async throws -> Set<EpisodeNumber>
@@ -90,11 +91,15 @@ public struct VideoRecord: Codable, Sendable, Equatable {
     public var lastCause: String?
     /// A listing's "3 weeks ago", when no exact time is known.
     public var approximatelyUploaded: Date?
+    /// The page a grab from a site other than YouTube is fetched from. A
+    /// YouTube video's URL is built from its id, so it has none.
+    public var sourceURL: String?
 
     public init(id: String, subscriptionID: UUID, title: String, uploaded: Date?, state: VideoState = .seen,
                 attempts: Int = 0, number: EpisodeNumber? = nil, path: String? = nil, firstSeen: Date,
-                lastCause: String? = nil, approximatelyUploaded: Date? = nil) {
+                lastCause: String? = nil, approximatelyUploaded: Date? = nil, sourceURL: String? = nil) {
         self.approximatelyUploaded = approximatelyUploaded
+        self.sourceURL = sourceURL
         self.id = id
         self.subscriptionID = subscriptionID
         self.title = title

@@ -37,7 +37,11 @@ Its reason is on the overview. The common ones:
 |---|---|
 | Age-restricted, and the cookies' account cannot see it | Upload cookies from an age-verified account, then Retry now |
 | Members only | Skip it. Cylindarr does not download members-only videos |
-| Removed from YouTube, private, not available in this country | Nothing to be done; Skip clears it |
+| Removed, private, not available in this country | Nothing to be done; Skip clears it |
+| Not something yt-dlp can fetch | A grab whose link yt-dlp has no extractor for. Check the link is a video's own page |
+| The site wants an account | Grabs from sites other than YouTube are downloaded signed out. Nothing to do for now; Skip clears it |
+| Audio only, and Grabs keeps videos | Grabs is a film library, so SoundCloud, Bandcamp and podcast links are refused |
+| A playlist or channel, not one video | Grab one of its videos instead. Only YouTube channels and playlists can be followed |
 | Deferred too many times | It met the bot check or a network error over and over. Fix the access problem, then Retry now |
 | yt-dlp failed in a way Cylindarr does not recognise | The detail carries yt-dlp's last lines. Often an update fixes it: press **Update yt-dlp**, then Retry now. If not, please open an issue with the lines |
 | Encoding failed | The detail carries ffmpeg's last lines. See below |

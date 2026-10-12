@@ -29,6 +29,12 @@ public struct VideoInfo: Decodable, Sendable, Equatable {
     public let height: Int?
     /// The downloaded audio's codec (`mp4a.40.2`, `opus`), or `none`.
     public let acodec: String?
+    /// The chosen format's video codec; `none` for audio only.
+    public let vcodec: String?
+    /// `Youtube`, `Vimeo`, `TwitchVod`: which yt-dlp extractor answered.
+    public let extractorKey: String?
+    /// `playlist` for a channel, playlist or album; absent for one video.
+    public let type: String?
     /// Present when yt-dlp was asked to cut or mark SponsorBlock segments.
     public let sponsorblockChapters: [SponsorBlockSegment]?
 
@@ -66,7 +72,9 @@ public struct VideoInfo: Decodable, Sendable, Equatable {
 
     enum CodingKeys: String, CodingKey {
         case id, title, description, timestamp, duration, channel, uploader, availability, thumbnail, chapters
-        case categories, width, height, acodec
+        case categories, width, height, acodec, vcodec
+        case extractorKey = "extractor_key"
+        case type = "_type"
         case uploadDate = "upload_date"
         case releaseTimestamp = "release_timestamp"
         case channelID = "channel_id"

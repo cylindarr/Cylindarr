@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Grab with Cylindarr</title>
+<style>
+  :root { color-scheme: light dark; --accent: #3d4a8f; --bad: #c0263b; --ok: #2f6f45; }
+  @media (prefers-color-scheme: dark) { :root { --accent: #9ea9ec; --bad: #ff8f9b; --ok: #7cc79a; } }
+  body { font: 15px/1.45 system-ui, sans-serif; max-width: 34rem; margin: 2.5rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.3rem; display: flex; align-items: center; gap: .6rem; }
+  label { display: block; margin: .9rem 0 .25rem; font-weight: 600; }
+  input { width: 100%; box-sizing: border-box; padding: .45rem .55rem; font: inherit; }
+  button { margin-top: 1.1rem; padding: .45rem 1rem; font: inherit; background: var(--accent); color: Canvas; border: 0; border-radius: 6px; cursor: pointer; }
+  .note { opacity: .75; font-size: .9rem; }
+  #status.bad { color: var(--bad); } #status.ok { color: var(--ok); }
+</style>
+</head>
+<body>
+<h1><img src="icons/icon-32.png" width="32" height="32" alt="">Grab with Cylindarr</h1>
+<p class="note">On your Cylindarr server's settings page, under Connect an app, copy the pairing link and paste it here. Or enter the address and key.</p>
+<form id="form">
+  <label for="link">Pairing link</label>
+  <input id="link" placeholder="cylindarr://pair?url=…&amp;key=…" autocomplete="off">
+  <label for="server">Address</label>
+  <input id="server" placeholder="http://nas.local:8295" autocomplete="off">
+  <label for="key">API key</label>
+  <input id="key" autocomplete="off">
+  <button type="submit">Connect</button>
+</form>
+<p id="status" role="status"></p>
+<p class="note">Then click the toolbar button on a video's page, press Alt+Shift+G, or right-click any link and choose Grab with Cylindarr. The shortcut can be changed at chrome://extensions/shortcuts.</p>
+<script type="module" src="options.js"></script>
+</body>
+</html>

@@ -63,7 +63,7 @@ The languages on the settings page (English by default), as `.srt` sidecars name
 
 ## Grabs
 
-A grab is a film: `Grabs/<Title> (<Year>) [<id>]/`, with the video, its NFO, and the thumbnail as `poster.jpg`.
+A grab is a film: `Grabs/<Title> (<Year>) [<id>]/`, with the video, its NFO, and the thumbnail as `poster.jpg`. A grab from a site other than YouTube has `<site>.<id>` in the brackets, in yt-dlp's names (`[peertube.9c9de5e8-0a1e-484a-b099-e80766180a6d]`), and its NFO's `<uniqueid>` names the site.
 
 ## What else is there
 

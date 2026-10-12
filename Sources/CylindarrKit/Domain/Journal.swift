@@ -7,7 +7,7 @@ import Foundation
 public enum Verb: String, Codable, Sendable, CaseIterable {
     case follow, poll, enumerate, consider, want, skip, fetch
     case defer_ = "defer", clean, encode, place, describe, notify, adopt, repair
-    case reconcile, verify, update, retire, purge, configure
+    case reconcile, verify, update, retire, purge, configure, resolve
 }
 
 public enum Noun: String, Codable, Sendable, CaseIterable {

@@ -7,6 +7,7 @@ FROM swift:6.3-noble AS build
 WORKDIR /build
 # Resolve first so dependencies cache independently of source changes.
 COPY Package.* ./
+COPY CylindarrAPI ./CylindarrAPI
 RUN swift package resolve
 
 COPY . .

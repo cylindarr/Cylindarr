@@ -21,6 +21,10 @@ actor Engine {
     /// scheduler may reach the same one in the same second; two polls would
     /// both record the same new videos.
     private var polling: Set<UUID> = []
+    /// Grabs whose URL Resolve is working on now.
+    var resolving: Set<String> = []
+    /// A grab arrived while the fetch loop was idle.
+    private var fetchWake = false
 
     init(app: Application, journal: Journal, dataDirectory: String, settings: AppSettings) {
         self.app = app
@@ -150,24 +154,46 @@ actor Engine {
         try? await Task.sleep(for: .seconds(20))
         while !Task.isCancelled {
             let fetched = await fetchNext()
-            let pause = fetched
-                ? Int.random(in: max(settings.pauseSecondsMin, 0)...max(settings.pauseSecondsMax, settings.pauseSecondsMin))
-                : 60
-            try? await Task.sleep(for: .seconds(pause))
+            if fetched {
+                // The pause between downloads stays whatever arrives: a burst
+                // of downloads from one address is what the bot check watches.
+                let pause = Int.random(in: max(settings.pauseSecondsMin, 0)...max(settings.pauseSecondsMax, settings.pauseSecondsMin))
+                try? await Task.sleep(for: .seconds(pause))
+            } else {
+                // Idle: a grab wakes it, so a grab starts within a second.
+                for _ in 0..<60 where !fetchWake && !Task.isCancelled {
+                    try? await Task.sleep(for: .seconds(1))
+                }
+            }
+            fetchWake = false
         }
     }
 
-    /// One video, if one is due and the gate is open. Returns whether it ran.
+    func wakeFetch() { fetchWake = true }
+
+    /// One video, if one is due and the gate lets it through. Returns
+    /// whether it ran. Grabs come first (see FluentVideoStore.due). The gate
+    /// is YouTube's view of this address, so while it is closed a grab from
+    /// another site still runs; a full disk stops everything.
     func fetchNext() async -> Bool {
-        guard settings.fetching, gate.isOpen(at: Date()) else { return false }
-        if gate.pausedUntil != nil {
+        guard settings.fetching else { return false }
+        var youtubeOpen = gate.isOpen(at: Date())
+        if youtubeOpen, gate.pausedUntil != nil {
             // The pause has run out. Check before trying a real video again.
             let report = await verifyNow()
-            guard report.passes else { return false }
-            gate.resume()
+            if report.passes { gate.resume() } else { youtubeOpen = false }
         }
-        guard let record = try? await store.due(at: Date(), limit: 1).first,
-              let sub = try? await store.subscription(record.subscriptionID) else { return false }
+        if !youtubeOpen, gate.reason == .lowDisk { return false }
+        var picked: VideoRecord?
+        // A grab not yet resolved is resolved first; a few rounds at most.
+        for _ in 0..<5 {
+            guard let due = try? await store.due(at: Date(), limit: youtubeOpen ? 5 : 50),
+                  let next = due.first(where: { !resolving.contains($0.id) && (youtubeOpen || !VideoKey.isYouTube($0.id)) })
+            else { return false }
+            guard VideoKey.isUnresolved(next.id) else { picked = next; break }
+            await resolve(next.id)
+        }
+        guard let record = picked, let sub = try? await store.subscription(record.subscriptionID) else { return false }
         current = record.id
         defer { current = nil }
         let files = SystemFileOps()
@@ -175,18 +201,30 @@ actor Engine {
                               finisher: Finisher(files: files, store: store, journal: journal, ffmpeg: ProcessFFmpeg()))
         let outcome = await fetcher.fetch(record, subscription: sub, settings: settings.fetchSettings(dataDirectory: dataDirectory))
         let wasOpen = gate.isOpen(at: Date())
-        gate.record(outcome, at: Date())
+        if VideoKey.isYouTube(record.id) || outcome == .deferred(.lowDisk) { gate.record(outcome, at: Date()) }
         if wasOpen, !gate.isOpen(at: Date()), let reason = gate.reason {
             journal.record(Entry(verb: .defer_, noun: .system, subject: "queue", outcome: .deferred,
                                  detail: "paused until \(gate.pausedUntil.map { "\($0)" } ?? "?"): \(reason.rawValue)"))
             await notify("Cylindarr paused fetching: \(reason.rawValue)")
         }
+        if sub.isGrabList { await announce(record.id, outcome, subscription: sub.id) }
         if case .placed(let path) = outcome {
             await ensureArtwork(sub)
             await MediaServers(client: app.client, journal: journal).placed(relativePath: path, grab: sub.isGrabList, settings: settings)
             if sub.rules.retention != .keepAll { await retireByRule(sub.id) }
         }
         return true
+    }
+
+    /// A grab placed or failed, on the phone: the apps learn it this way,
+    /// since a self-hosted server has no way to Apple's push service.
+    func announce(_ key: String, _ outcome: Fetcher.Outcome, subscription: UUID) async {
+        let title = (try? await store.video(key))?.title ?? key
+        switch outcome {
+        case .placed: await notify("Grabbed: \(title)", page: Links.video(key, in: subscription))
+        case .failed(let cause): await notify("Grab failed: \(title) is \(cause.sentence).", page: Links.video(key, in: subscription))
+        default: break
+        }
     }
 
     /// `page` is a path such as `/settings`; with `CYLINDARR_PUBLIC_URL` set,

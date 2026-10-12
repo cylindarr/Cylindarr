@@ -19,6 +19,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.8.0"),
         .package(url: "https://github.com/vapor/leaf.git", from: "4.4.0"),
         .package(url: "https://github.com/apple/swift-crypto.git", "3.0.0"..<"5.0.0"),
+        // The JSON API's types, shared with the Apple apps in Apple/.
+        .package(path: "CylindarrAPI"),
     ],
     targets: [
         // All decisions live here. No Vapor, no network, no filesystem except
@@ -43,6 +45,7 @@ let package = Package(
                 .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
                 .product(name: "Leaf", package: "leaf"),
                 .product(name: "Crypto", package: "swift-crypto"),
+                .product(name: "CylindarrAPI", package: "CylindarrAPI"),
             ],
             path: "Sources/App"
         ),

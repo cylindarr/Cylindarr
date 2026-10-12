@@ -3,8 +3,9 @@ import FluentSQLiteDriver
 import Leaf
 import Vapor
 import CylindarrKit
+import CylindarrAPI
 
-let cylindarrVersion = "0.2.0"
+let cylindarrVersion = "0.3.0"
 
 public func configure(_ app: Application) async throws {
     let data = Environment.get("CYLINDARR_DATA") ?? app.directory.workingDirectory + "data"
@@ -22,7 +23,13 @@ public func configure(_ app: Application) async throws {
 
     let journal = StdoutJournal(db: app.db)
     app.storage[JournalKey.self] = journal
-    let settings = await AppSettings.load(app.db)
+    var settings = await AppSettings.load(app.db)
+    if settings.apiKey.isEmpty {
+        settings.apiKey = AppSettings.newAPIKey()
+        try await settings.save(app.db)
+    }
+    ContentConfiguration.global.use(encoder: CylindarrAPI.encoder(), for: .json)
+    ContentConfiguration.global.use(decoder: CylindarrAPI.decoder(), for: .json)
     app.storage[EngineKey.self] = Engine(app: app, journal: journal, dataDirectory: data, settings: settings)
     app.lifecycle.use(EngineLifecycle())
     try routes(app)

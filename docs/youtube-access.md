@@ -39,7 +39,7 @@ While the queue is paused, the overview says why and until when, and polling car
 
 ## PO tokens
 
-The compose file runs [bgutil-ytdlp-pot-provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider) on a private Docker network that only Cylindarr can reach. Keep it that way: versions before 2.0.0 had a remote code execution hole when reachable from the network, so the compose file pins 2.0.0, and the provider's port should never be published.
+The compose file runs [bgutil-ytdlp-pot-provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider) on a private Docker network that only Cylindarr can reach. Keep it that way: versions of the PO token provider before 2.0.0 had a remote code execution hole when reachable from the network, so the compose file pins 2.0.0, and the provider's port should never be published. We’ll just choose to never trust it fully.
 
 Without a provider everything still works, and the overview shows a warning that the bot check will come sooner.
 
@@ -67,9 +67,9 @@ The proxy's password is never shown on the settings page or written to the log.
 
 ## Keeping yt-dlp current
 
-YouTube changes break yt-dlp every few weeks, and fixes ship within days. A tool whose yt-dlp stays at the version in its image stops working, which is how most abandoned downloaders die.
+The heart of this working is yt-dlp and YouTube changes break it every few weeks;. Fixes typicaly ship within days. So keeping it fresh is key to Cylindarr working automatically.
 
-So once a day, Cylindarr checks yt-dlp's latest release. If there is a newer one, it downloads the binary for its platform, checks it against the release's published SHA-256 sums, and runs the access check with it. It switches to the new version only if the check passes; otherwise it stays where it is and the journal says why. It keeps the version before as well. **Update yt-dlp** on the overview does the same thing now.
+Once a day, Cylindarr checks yt-dlp's latest release. If there is a newer one, it downloads the binary for its platform, checks it against the release's published SHA-256 sums, and runs the access check with it. It switches to the new version only if the check passes; otherwise it stays where it is and the journal says why. It keeps the version before as well. **Update yt-dlp** on the overview does the same thing now.
 
 If you would rather nothing in your container downloaded executables, switch off "Update yt-dlp daily". Setting `CYLINDARR_YTDLP` also pins it.
 

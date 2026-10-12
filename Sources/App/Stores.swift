@@ -19,8 +19,24 @@ struct FluentVideoStore: VideoStore {
         }
     }
 
+    /// Grabs first, so a one-off sent from the share sheet does not wait
+    /// behind a back catalogue.
     func due(at now: Date, limit: Int) async throws -> [VideoRecord] {
-        let rows = try await VideoModel.query(on: db)
+        let grabs = try await dueGrabs(at: now, limit: limit)
+        guard grabs.count < limit else { return grabs }
+        let ids = try await GrabService.grabListIDs(on: db)
+        return grabs + (try await dueQuery(at: now).filter(\.$subscriptionID !~ ids).limit(limit - grabs.count).all().map(\.record))
+    }
+
+    /// Waiting grabs, in the order they will be fetched.
+    func dueGrabs(at now: Date, limit: Int) async throws -> [VideoRecord] {
+        let ids = try await GrabService.grabListIDs(on: db)
+        guard !ids.isEmpty else { return [] }
+        return try await dueQuery(at: now).filter(\.$subscriptionID ~~ ids).limit(limit).all().map(\.record)
+    }
+
+    private func dueQuery(at now: Date) -> QueryBuilder<VideoModel> {
+        VideoModel.query(on: db)
             .group(.or) { g in
                 g.filter(\.$state == "wanted")
                 g.group(.and) { d in
@@ -33,9 +49,6 @@ struct FluentVideoStore: VideoStore {
             // holds up a new upload.
             .sort(\.$path, .ascending)
             .sort(\.$firstSeen, .ascending)
-            .limit(limit)
-            .all()
-        return rows.map(\.record)
     }
 
     func numbers(inShow show: String) async throws -> Set<EpisodeNumber> {
@@ -96,6 +109,9 @@ struct AppSettings: Codable, Sendable, Equatable {
     var encoder: String = "auto"
     /// The QP or CRF every encoder is given; see EncodeSettings.quality.
     var encodeQuality: Int = 24
+    /// What the apps and the browser extension send as `X-Api-Key`. Made
+    /// at first start, shown on the settings page, made again on request.
+    var apiKey: String = ""
 
     static let encoderChoices = ["auto", "quicksync", "vaapi", "nvenc", "software", "none"]
 
@@ -131,6 +147,7 @@ struct AppSettings: Codable, Sendable, Equatable {
         autoUpdate = v(.autoUpdate, d.autoUpdate)
         encoder = v(.encoder, d.encoder)
         encodeQuality = v(.encodeQuality, d.encodeQuality)
+        apiKey = v(.apiKey, d.apiKey)
     }
 
     static let environmentKeys: [String: WritableKeyPath<AppSettings, String>] = [
@@ -148,6 +165,7 @@ struct AppSettings: Codable, Sendable, Equatable {
         "CYLINDARR_JELLYFIN_PATH_MAP": \.jellyfinPathMap,
         "CYLINDARR_NTFY_URL": \.ntfyURL,
         "CYLINDARR_ENCODER": \.encoder,
+        "CYLINDARR_API_KEY": \.apiKey,
     ]
 
     static func pinned() -> Set<String> {
@@ -175,6 +193,8 @@ struct AppSettings: Codable, Sendable, Equatable {
             try await SettingModel(key: "settings", value: json).create(on: db)
         }
     }
+
+    static func newAPIKey() -> String { [UInt8].random(count: 16).hex }
 
     /// The encoder the choice resolves to on this machine's devices.
     var resolvedEncoder: EncodeSettings.Encoder { ProcessFFmpeg.encoder(choice: encoder) }

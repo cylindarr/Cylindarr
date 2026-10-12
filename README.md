@@ -22,8 +22,8 @@ It exists because the tools people used for this stopped moving. Pinchflat's las
 - **A failure is a state with a reason.** "Waiting to retry" passes on its own and says when it will try again. "Needs you" will not, says why, and is on the front page. Nothing is marked done that is not on disk.
 - **It watches its own access to YouTube.** It checks every hour whether yt-dlp can still extract a video, whether your cookies are still a live sign-in, and whether the PO token provider is up. It updates yt-dlp daily, checks the download's checksum, and switches only after the new version passes the same check. When YouTube starts refusing, it pauses the whole queue instead of burning through it.
 - **It adopts what you already have.** Point it at a Pinchflat or TubeSync library, or anything yt-dlp wrote, and it files those videos into its own layout without downloading them again. You see the whole plan before anything moves.
-- **One-off grabs.** Paste a single video and it lands in a `Grabs` folder as a film.
-- **The files are the library.** Every file carries its YouTube id in its name and its NFO. Lose the database and nothing on disk is lost.
+- **One-off grabs from anywhere.** Share a video from your iPhone or Mac, click the browser extension, or paste a link, and it lands in a `Grabs` folder as a film. Any site yt-dlp can download from, not only YouTube.
+- **The files are the library.** Every file carries its YouTube id (or, for another site, `site.id`) in its name and its NFO. Lose the database and nothing on disk is lost.
 
 ## Getting started
 
@@ -53,6 +53,7 @@ Open `http://<your server>:8295`, then:
 | [Configuration](docs/configuration.md) | Every setting, and the environment variables that can fix one in place |
 | [Subscriptions](docs/subscriptions.md) | Following, rules, back catalogues, retention, and grabs |
 | [Reaching YouTube](docs/youtube-access.md) | The bot check, PO tokens, cookies, proxies, and what Cylindarr does when YouTube says no |
+| [Apps and the browser extension](docs/apps.md) | Grabbing from the share sheet, the Mac, and Chromium browsers; pairing; the JSON API |
 | [Media servers](docs/media-servers.md) | Setting up Plex, Jellyfin, and Emby libraries, and the refresh after each download |
 | [Encoding](docs/encoding.md) | HEVC, SponsorBlock cutting, the encoder choices, and switching encoding off |
 | [The library](docs/library.md) | Folders, file names, episode numbers, and NFOs |

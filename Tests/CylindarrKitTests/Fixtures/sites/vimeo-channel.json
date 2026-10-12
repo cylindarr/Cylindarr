@@ -1,0 +1,17 @@
+{
+ "_type": "playlist",
+ "id": "staffpicks",
+ "title": "Vimeo Staff Picks",
+ "extractor": "vimeo:channel",
+ "extractor_key": "VimeoChannel",
+ "webpage_url": "https://vimeo.com/channels/staffpicks",
+ "entries": [
+  {
+   "ie_key": "Vimeo",
+   "id": "1231743820",
+   "title": "Getaway | A journey into relationship grief",
+   "_type": "url",
+   "url": "https://vimeo.com/channels/staffpicks/1231743820"
+  }
+ ]
+}

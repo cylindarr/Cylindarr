@@ -8,3 +8,10 @@ data/
 *.sqlite-shm
 *.sqlite-wal
 .claude/settings.local.json
+
+# The Apple apps
+Apple/*.xcodeproj
+Apple/.buildnumber
+Apple/build/
+Apple/CylindarrClientKit/.build/
+CylindarrAPI/.build/

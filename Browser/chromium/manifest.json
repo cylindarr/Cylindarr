@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Grab with Cylindarr",
+  "short_name": "Cylindarr",
+  "version": "0.3.0",
+  "description": "Sends the video you are looking at, or a link you right-click, to your Cylindarr server.",
+  "icons": { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" },
+  "action": { "default_title": "Grab with Cylindarr", "default_icon": { "16": "icons/icon-16.png", "32": "icons/icon-32.png" } },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "options_page": "options.html",
+  "permissions": ["contextMenus", "storage", "notifications"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "commands": {
+    "grab-tab": {
+      "suggested_key": { "default": "Alt+Shift+G" },
+      "description": "Grab the video in this tab"
+    }
+  }
+}

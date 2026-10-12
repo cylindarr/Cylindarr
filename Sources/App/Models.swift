@@ -62,6 +62,7 @@ final class VideoModel: Model, @unchecked Sendable {
     @Field(key: "first_seen") var firstSeen: Date
     @OptionalField(key: "last_cause") var lastCause: String?
     @OptionalField(key: "approx_uploaded") var approximatelyUploaded: Date?
+    @OptionalField(key: "source_url") var sourceURL: String?
     @Timestamp(key: "updated_at", on: .update) var updatedAt: Date?
 
     init() {}
@@ -83,6 +84,7 @@ final class VideoModel: Model, @unchecked Sendable {
         firstSeen = r.firstSeen
         lastCause = r.lastCause
         approximatelyUploaded = r.approximatelyUploaded
+        sourceURL = r.sourceURL
         switch r.state {
         case .skipped(let why): reason = why.rawValue; until = nil
         case .deferred(let cause, let u): reason = cause.rawValue; until = u
@@ -105,7 +107,7 @@ final class VideoModel: Model, @unchecked Sendable {
         let number = season.flatMap { se in episode.map { EpisodeNumber(season: se, episode: $0) } }
         return VideoRecord(id: id!, subscriptionID: subscriptionID, title: title, uploaded: uploaded, state: s,
                            attempts: attempts, number: number, path: path, firstSeen: firstSeen, lastCause: lastCause,
-                           approximatelyUploaded: approximatelyUploaded)
+                           approximatelyUploaded: approximatelyUploaded, sourceURL: sourceURL)
     }
 }
 
@@ -211,8 +213,20 @@ enum Migrations {
         }
     }
 
+    /// The page a grab from a site other than YouTube is fetched from.
+    struct SourceURLs: AsyncMigration {
+        func prepare(on db: Database) async throws {
+            try await db.schema(VideoModel.schema).field("source_url", .string).update()
+        }
+
+        func revert(on db: Database) async throws {
+            try await db.schema(VideoModel.schema).deleteField("source_url").update()
+        }
+    }
+
     static func register(_ app: Application) {
         app.migrations.add(Initial())
         app.migrations.add(ApproximateDates())
+        app.migrations.add(SourceURLs())
     }
 }

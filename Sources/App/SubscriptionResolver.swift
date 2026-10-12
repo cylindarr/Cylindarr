@@ -69,30 +69,4 @@ struct SubscriptionResolver {
         }
         return id
     }
-
-    /// A one-off: filed under Grabs as a film. Held by a built-in grab-list
-    /// subscription that is never polled.
-    func grab(_ raw: String) async throws -> String {
-        guard case .video(let id) = Identifier.parse(raw) else {
-            throw Failure(message: "Grab takes a single YouTube video for now.")
-        }
-        let grabs: SubscriptionModel
-        if let existing = try await SubscriptionModel.query(on: req.db).filter(\.$youtubeID == Self.grabsID).first() {
-            grabs = existing
-        } else {
-            grabs = SubscriptionModel(Subscription(kind: .playlist, youtubeID: Self.grabsID, name: "Grabs", enabled: false, isGrabList: true))
-            try await grabs.create(on: req.db)
-        }
-        let store = FluentVideoStore(db: req.db)
-        if var existing = try await store.video(id) {
-            if case .placed = existing.state { throw Failure(message: "Already in the library.") }
-            existing.state = .wanted
-            existing.attempts = 0
-            try await store.save(existing)
-        } else {
-            try await store.save(VideoRecord(id: id, subscriptionID: grabs.id!, title: id, uploaded: nil, state: .wanted, firstSeen: Date()))
-        }
-        req.application.journal.record(Entry(verb: .want, noun: .video, subject: id, outcome: .wanted, detail: "grab"))
-        return id
-    }
 }

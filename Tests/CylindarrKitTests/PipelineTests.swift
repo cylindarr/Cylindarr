@@ -187,6 +187,7 @@ import Testing
         #expect(yt.calls.count == 1)
     }
 
+
     @Test func repeatedUnknownFailuresStopDeferring() async throws {
         let (fetcher, yt, _, store, _, settings, record) = await rig()
         var r = record
@@ -357,6 +358,30 @@ import Testing
         #expect(outcome == .placed("Grabs/When AI Stops Feeling Magical - Greg Hochmuth (2025) [snyvQ9COmb8]/When AI Stops Feeling Magical - Greg Hochmuth (2025) [snyvQ9COmb8].mp4"))
         #expect(files.files.keys.contains { $0.hasSuffix("[snyvQ9COmb8]/poster.jpg") })
         #expect(!files.files.keys.contains { $0.hasSuffix("tvshow.nfo") })
+    }
+
+    /// A grab from another site is fetched from its page, named by its key,
+    /// and never offered the YouTube account's cookies.
+    @Test func aGrabFromAnotherSiteIsFiledByItsKey() async throws {
+        var grabs = dreamLogic
+        grabs.isGrabList = true
+        let (fetcher, yt, files, _, _, settings, _) = await rig(cookies: true)
+        let key = "peertube.9c9de5e8-0a1e-484a-b099-e80766180a6d"
+        let record = VideoRecord(id: key, subscriptionID: grabs.id, title: "What is PeerTube?", uploaded: nil, state: .wanted,
+                                 firstSeen: now, sourceURL: "https://framatube.org/w/9c9de5e8-0a1e-484a-b099-e80766180a6d")
+        yt.steps = [.init(result: FakeYtDlp.ok(), sideEffect: { _ in
+            let s = settings.staging(for: key)
+            files.files[s + "/\(key).mp4"] = Data("video".utf8)
+            files.files[s + "/\(key).info.json"] = Fixture.data("sites/peertube-video.json")
+            files.files[s + "/\(key).jpg"] = Data("jpg".utf8)
+        }), .init(result: FakeYtDlp.ok())]
+        (fetcher.finisher.ffmpeg as! FakeFFmpeg).played = 113
+        let outcome = await fetcher.fetch(record, subscription: grabs, settings: settings)
+        #expect(outcome == .placed("Grabs/What is PeerTube (2018) [\(key)]/What is PeerTube (2018) [\(key)].mp4"))
+        #expect(yt.calls[0].last == record.sourceURL)
+        #expect(!yt.calls.flatMap { $0 }.contains("--cookies"))
+        let nfo = try #require(files.files.first { $0.key.hasSuffix("[\(key)].nfo") }?.value)
+        #expect(String(decoding: nfo, as: UTF8.self).contains(#"<uniqueid type="peertube""#))
     }
 }
 

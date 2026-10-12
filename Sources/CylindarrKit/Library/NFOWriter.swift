@@ -106,7 +106,8 @@ public enum NFOWriter {
         if let plot = m.plot, !plot.isEmpty { lines.append(element("plot", plot)) }
         if let r = m.runtimeSeconds { lines.append(element("runtime", String(max(1, (r + 30) / 60)))) }
         if let studio = m.studio { lines.append(element("studio", studio)) }
-        lines.append(#"  <uniqueid type="youtube" default="true">\#(escape(m.videoID))</uniqueid>"#)
+        let key = VideoKey.parts(m.videoID)
+        lines.append(#"  <uniqueid type="\#(escape(key.site))" default="true">\#(escape(key.id))</uniqueid>"#)
         lines.append("</movie>")
         return lines.joined(separator: "\n") + "\n"
     }

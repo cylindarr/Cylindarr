@@ -1,0 +1,19 @@
+{
+ "_type": "video",
+ "id": "9c9de5e8-0a1e-484a-b099-e80766180a6d",
+ "title": "What is PeerTube?",
+ "description": "**[Want to help to translate this video?](https://weblate.framasoft.org/projects/what-is-peertube-video/)**\r\n\r\n**Take back the control of your videos! [#JoinPeertube](https://joinpeertube.org)**\r\n*A decentralized video hosting network, based on free/libre software!*\r\n\r\n**Animation Produced by:** [LILA](https://libreart.info) - [ZeMarmot Team](https://film.zemarmot.net)\r\n*Directed by* Aryeom\r\n*Assistant* Jehan\r\n**Licence**: [CC-By-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)\r\n\r\n**Sponsored by** [Framasoft](https://framasoft.org)\r\n\r\n**Music**: [Red Step Forward](http://play.dogmazic.net/song.php?song_id=52491) - CC-By Ken Bushima\r\n\r\n**Movie Clip**: [Caminades 3: Llamigos](http://www.caminandes.com/) CC-By Blender Institute\r\n\r\n**Video sources**: https://gitlab.gnome.org/Jehan/what-is-peertube/",
+ "extractor": "PeerTube",
+ "extractor_key": "PeerTube",
+ "vcodec": "avc1.64001f",
+ "acodec": "mp4a.40.2",
+ "upload_date": "20181001",
+ "timestamp": 1538391166,
+ "webpage_url": "https://framatube.org/videos/watch/9c9de5e8-0a1e-484a-b099-e80766180a6d",
+ "duration": 113,
+ "uploader": "Framasoft",
+ "channel": "A propos de PeerTube",
+ "width": 1920,
+ "height": 1080,
+ "ext": "mp4"
+}

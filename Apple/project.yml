@@ -1,0 +1,242 @@
+# The Apple apps: a remote for a Cylindarr server. Their job is the share
+# extensions; the apps pair with a server and show recent grabs. Logic lives
+# in CylindarrClientKit (swift test runs it on the Mac); the wire types are
+# the server's own CylindarrAPI package. Generate with `xcodegen generate`;
+# the .xcodeproj is not committed.
+name: Cylindarr
+options:
+  bundleIdPrefix: com.pantuso
+  deploymentTarget:
+    iOS: "26.0"
+    macOS: "26.0"
+  createIntermediateGroups: true
+
+packages:
+  CylindarrClientKit:
+    path: CylindarrClientKit
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: JE58Y62NM2
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "6.0"
+    # Placeholders. scripts/stamp-version.sh stamps every built Info.plist
+    # with Year.Month and a build counter, so a 0 on screen means it didn't run.
+    MARKETING_VERSION: "0"
+    CURRENT_PROJECT_VERSION: "0"
+    # The stamp script runs PlistBuddy on the built plist.
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    GENERATE_INFOPLIST_FILE: YES
+    INFOPLIST_KEY_CFBundleDisplayName: Cylindarr
+
+targets:
+  Cylindarr:
+    type: application
+    platform: iOS
+    sources:
+      - path: iOS
+      - path: Shared
+    dependencies:
+      - package: CylindarrClientKit
+        product: CylindarrClientKit
+      - package: CylindarrClientKit
+        product: CylindarrClientUI
+      - target: CylindarrShare
+        embed: true
+    entitlements:
+      path: iOS/Cylindarr.entitlements
+      properties:
+        # The pairing lives in the Keychain, shared with the share extension.
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)com.pantuso.cylindarr
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pantuso.cylindarr
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+    info:
+      path: iOS/Info.plist
+      properties:
+        ITSAppUsesNonExemptEncryption: false
+        CylindarrKeychainGroup: $(AppIdentifierPrefix)com.pantuso.cylindarr
+        # A Cylindarr server is the user's own, often plain HTTP on the home
+        # network or a VPN (media.lan:8295, cylindarr.example.ts.net:8295). Local networking
+        # alone covers only unqualified and .local names.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSLocalNetworkUsageDescription: Cylindarr sends the videos you share to your Cylindarr server on your network.
+        CFBundleURLTypes:
+          - CFBundleURLName: com.pantuso.cylindarr
+            CFBundleURLSchemes:
+              - cylindarr
+    postbuildScripts:
+      - name: Stamp Version
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        script: |
+          "$SRCROOT/scripts/stamp-version.sh" same
+        basedOnDependencyAnalysis: false
+
+  CylindarrShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: iOSShare
+    dependencies:
+      - package: CylindarrClientKit
+        product: CylindarrClientKit
+      - package: CylindarrClientKit
+        product: CylindarrClientUI
+    entitlements:
+      path: iOSShare/CylindarrShare.entitlements
+      properties:
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)com.pantuso.cylindarr
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pantuso.cylindarr.share
+        INFOPLIST_KEY_CFBundleDisplayName: Grab with Cylindarr
+        TARGETED_DEVICE_FAMILY: "1"
+        SKIP_INSTALL: YES
+    info:
+      path: iOSShare/Info.plist
+      properties:
+        CylindarrKeychainGroup: $(AppIdentifierPrefix)com.pantuso.cylindarr
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsText: true
+    postbuildScripts:
+      # Built before the app that embeds it, so it takes the new number.
+      - name: Stamp Version
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        script: |
+          "$SRCROOT/scripts/stamp-version.sh" next
+        basedOnDependencyAnalysis: false
+
+  # Native macOS SwiftUI, never Catalyst, sharing the kit. Held to the
+  # Mac-assed standard: every command in the menu bar, per-window lists and
+  # selection, Services, drag and copy of links.
+  CylindarrMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: macOS
+      - path: Shared
+    dependencies:
+      - package: CylindarrClientKit
+        product: CylindarrClientKit
+      - package: CylindarrClientKit
+        product: CylindarrClientUI
+      - target: CylindarrMacShare
+        embed: true
+    entitlements:
+      path: macOS/CylindarrMac.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)com.pantuso.cylindarr
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pantuso.cylindarr
+        PRODUCT_NAME: Cylindarr
+        ASSETCATALOG_COMPILER_APPICON_NAME: MacAppIcon
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        ENABLE_HARDENED_RUNTIME: YES
+    info:
+      path: macOS/Info.plist
+      properties:
+        ITSAppUsesNonExemptEncryption: false
+        CylindarrKeychainGroup: $(AppIdentifierPrefix)com.pantuso.cylindarr
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        CFBundleURLTypes:
+          - CFBundleURLName: com.pantuso.cylindarr
+            CFBundleURLSchemes:
+              - cylindarr
+        NSServices:
+          - NSMenuItem:
+              default: Grab with Cylindarr
+            NSMessage: grabWithCylindarr
+            NSPortName: Cylindarr
+            NSSendTypes:
+              - public.url
+              - public.utf8-plain-text
+    postbuildScripts:
+      - name: Stamp Version
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        script: |
+          "$SRCROOT/scripts/stamp-version.sh" same
+        basedOnDependencyAnalysis: false
+
+  CylindarrMacShare:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: macOSShare
+    dependencies:
+      - package: CylindarrClientKit
+        product: CylindarrClientKit
+      - package: CylindarrClientKit
+        product: CylindarrClientUI
+    entitlements:
+      path: macOSShare/CylindarrMacShare.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)com.pantuso.cylindarr
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pantuso.cylindarr.macshare
+        INFOPLIST_KEY_CFBundleDisplayName: Grab with Cylindarr
+        SKIP_INSTALL: YES
+    info:
+      path: macOSShare/Info.plist
+      properties:
+        CylindarrKeychainGroup: $(AppIdentifierPrefix)com.pantuso.cylindarr
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsText: true
+    postbuildScripts:
+      - name: Stamp Version
+        inputFiles:
+          - $(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)
+        script: |
+          "$SRCROOT/scripts/stamp-version.sh" next
+        basedOnDependencyAnalysis: false
+
+schemes:
+  Cylindarr:
+    build:
+      targets:
+        Cylindarr: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  CylindarrMac:
+    build:
+      targets:
+        CylindarrMac: all
+    run:
+      config: Debug
+    archive:
+      config: Release

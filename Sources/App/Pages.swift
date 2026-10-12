@@ -1,5 +1,6 @@
 import Fluent
 import Vapor
+import CylindarrAPI
 import CylindarrKit
 
 /// What each page is given. Plain encodable rows: the templates format
@@ -80,7 +81,16 @@ enum Pages {
         if when.isEmpty, let u = r.uploaded { when = day.string(from: u) }
         return VideoRow(id: r.id, title: r.title, show: names[r.subscriptionID] ?? "", showID: r.subscriptionID.uuidString,
                         state: r.state.name, stateLabel: stateLabel(r.state.name), why: why, when: when, number: r.number?.description ?? "",
-                        url: Links.youtube(video: r.id), href: Links.video(r.id, in: r.subscriptionID))
+                        url: Links.source(r), href: Links.video(r.id, in: r.subscriptionID))
+    }
+
+    static func pauseSentence(_ reason: DeferCause) -> String {
+        switch reason {
+        case .botCheck: "YouTube's bot check. That is the address, not the videos; retrying into it keeps it flagged."
+        case .lowDisk: "The library is below the free-space floor."
+        case .rateLimited: "YouTube is rate-limiting this address."
+        default: reason.rawValue
+        }
     }
 
     static func names(_ db: Database) async throws -> [UUID: String] {
@@ -156,23 +166,19 @@ enum Pages {
         let status = await req.application.engine.status
         var banners: [Banner] = []
         if let e = req.query[String.self, at: "error"] { banners.append(Banner(level: "bad", text: e)) }
-        if let g = req.query[String.self, at: "grabbed"], Identifier.isVideoID(g) {
-            let sub = try await VideoModel.find(g, on: db)?.subscriptionID
-            banners.append(Banner(level: "ok", text: "Wanted \(g); it will be filed under Grabs.", link: sub == nil ? "" : "Its row",
-                                  href: sub.map { Links.video(g, in: $0) } ?? "", youtube: Links.youtube(video: g)))
+        if let g = req.query[String.self, at: "grabbed"], let video = try await VideoModel.find(g, on: db) {
+            let r = video.record
+            banners.append(Banner(level: "ok", text: "Wanted \(VideoKey.isUnresolved(g) ? r.title : g); it will be filed under Grabs.",
+                                  link: "Its row", href: Links.video(g, in: r.subscriptionID), youtube: Links.source(r)))
         }
         if !status.fetching {
             banners.append(Banner(level: "warn", text: "Fetching is switched off in settings. New videos are noticed and wait.",
                                   link: "Settings", href: "/settings"))
         }
         if !status.gateOpen, let until = status.pausedUntil {
-            let why: String
-            switch status.reason {
-            case .botCheck: why = "YouTube asked \(status.consecutiveBotChecks) times in a row to confirm this is not a bot. That is the address, not the videos; retrying into it keeps it flagged."
-            case .lowDisk: why = "The library is below the free-space floor."
-            case .rateLimited: why = "YouTube is rate-limiting this address."
-            default: why = status.reason?.rawValue ?? ""
-            }
+            let why = status.reason == .botCheck
+                ? "YouTube asked \(status.consecutiveBotChecks) times in a row to confirm this is not a bot. That is the address, not the videos; retrying into it keeps it flagged."
+                : status.reason.map(pauseSentence) ?? ""
             banners.append(Banner(level: "bad", text: "Fetching is paused until \(short.string(from: until)). \(why)",
                                   link: "The access check", href: "/#access"))
         }
@@ -271,6 +277,10 @@ enum Pages {
         let encoder: String
         let encoderChoices: [Choice]
         let encodes: Bool
+        /// Where an app reaches this server, and the link that pairs it.
+        let serverURL: String
+        let pairingLink: String
+        let keyPinned: Bool
     }
 
     struct Choice: Content {
@@ -316,7 +326,17 @@ enum Pages {
         return SettingsPage(version: cylindarrVersion, banners: banners, s: s, pinned: AppSettings.pinned().sorted(), hasPinned: !AppSettings.pinned().isEmpty, cookies: cookies, hasCookies: text != nil,
                             encoder: Self.describe(s.resolvedEncoder),
                             encoderChoices: AppSettings.encoderChoices.map { Choice(value: $0, label: encoderLabels[$0] ?? $0, selected: $0 == s.encoder) },
-                            encodes: s.resolvedEncoder != .none)
+                            encodes: s.resolvedEncoder != .none,
+                            serverURL: serverURL(req), pairingLink: CylindarrAPI.pairingLink(server: serverURL(req), key: s.apiKey),
+                            keyPinned: AppSettings.pinned().contains("CYLINDARR_API_KEY"))
+    }
+
+    /// `CYLINDARR_PUBLIC_URL` when set, since a reverse proxy may give the
+    /// app another name; otherwise the address this page was asked for.
+    static func serverURL(_ req: Request) -> String {
+        if let url = Environment.get("CYLINDARR_PUBLIC_URL"), !url.isEmpty { return url.trimmingSuffix("/") }
+        let scheme = req.headers.first(name: "X-Forwarded-Proto") ?? "http"
+        return "\(scheme)://" + (req.headers.first(name: .host) ?? "localhost:8295")
     }
 
     static func describe(_ encoder: EncodeSettings.Encoder) -> String {

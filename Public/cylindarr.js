@@ -22,3 +22,22 @@
     if (href === "/" ? path === "/" : path.startsWith(href)) a.setAttribute("aria-current", "page");
   }
 })();
+
+// The settings page's pairing code, drawn by qrcode.js, and its copy button.
+(function () {
+  const box = document.querySelector("[data-qr]");
+  if (box && window.qrcode) {
+    const qr = window.qrcode(0, "M");
+    qr.addData(box.dataset.qr);
+    qr.make();
+    box.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+  }
+  for (const b of document.querySelectorAll("[data-copy]")) {
+    b.addEventListener("click", function () {
+      navigator.clipboard.writeText(b.dataset.copy).then(function () {
+        b.textContent = "Copied";
+        setTimeout(function () { b.textContent = "Copy"; }, 2000);
+      });
+    });
+  }
+})();
