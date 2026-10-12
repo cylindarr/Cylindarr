@@ -4,6 +4,8 @@ Cylindarr takes issues and suggestions. It does not take pull requests or code.
 
 Pull requests are closed without review, however good the code in them is. If you want Cylindarr to work differently for you, the [AGPL](LICENSE) lets you fork it and change what you like. If you want it to work differently for everyone, open an issue and make the case.
 
+A security problem goes through GitHub's private reporting, not an issue; see [SECURITY.md](SECURITY.md).
+
 ## What helps
 
 - **Bug reports.** What you expected, what happened, and the version (at the foot of every page). For a failed video, paste the reason shown beside it on the front page and the lines around it in the journal. The reason usually tells the whole story, because Cylindarr records why a download failed, not just that it did. Take out your host names, addresses, cookies, and API key first.
