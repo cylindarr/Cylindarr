@@ -182,11 +182,24 @@ import Testing
 
     @Test func aRemovedVideoFailsAtOnce() async {
         let (fetcher, yt, _, _, _, settings, record) = await rig(cookies: true)
-        yt.steps = [.init(result: FakeYtDlp.fail(Fixture.text("errors/unavailable.txt")))]
+        yt.steps = [.init(result: FakeYtDlp.fail("ERROR: [youtube] snyvQ9COmb8: Video unavailable. This video has been removed by the uploader"))]
         #expect(await fetcher.fetch(record, subscription: dreamLogic, settings: settings) == .failed(.removed))
         #expect(yt.calls.count == 1)
     }
 
+    /// A bare "Video unavailable" is also a video that is not public yet.
+    @Test func anUnavailableVideoWaitsBeforeItFailsAsRemoved() async throws {
+        let (fetcher, yt, _, store, _, settings, record) = await rig()
+        yt.steps = [.init(result: FakeYtDlp.fail(Fixture.text("errors/unavailable.txt")))]
+        #expect(await fetcher.fetch(record, subscription: dreamLogic, settings: settings) == .deferred(.unavailable))
+        #expect(await store.all()["snyvQ9COmb8"]?.state == .deferred(.unavailable, until: now.addingTimeInterval(3600)))
+
+        var r = record
+        r.attempts = 18
+        yt.steps = [.init(result: FakeYtDlp.fail(Fixture.text("errors/unavailable.txt")))]
+        #expect(await fetcher.fetch(r, subscription: dreamLogic, settings: settings) == .failed(.removed))
+        #expect(await store.all()["snyvQ9COmb8"]?.state == .failed(.removed))
+    }
 
     @Test func repeatedUnknownFailuresStopDeferring() async throws {
         let (fetcher, yt, _, store, _, settings, record) = await rig()

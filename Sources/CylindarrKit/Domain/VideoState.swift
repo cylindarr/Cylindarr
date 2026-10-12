@@ -83,6 +83,11 @@ public enum DeferCause: String, Codable, Sendable, CaseIterable {
     /// the current release did not hit: the usual cause is a stale yt-dlp or
     /// a missing PO token, so it waits for Update rather than retrying hard.
     case streamForbidden = "stream-forbidden"
+    /// A bare "Video unavailable". YouTube says that for a removed video, but
+    /// also for one that is in a playlist and not public yet; a removal it
+    /// names ("removed by the uploader", "account … terminated") fails at
+    /// once. So it is tried again for about two weeks, then fails as removed.
+    case unavailable
     case unknown
 
     /// How long to wait before attempt `attempt + 1`, where `attempt` counts
@@ -98,6 +103,7 @@ public enum DeferCause: String, Codable, Sendable, CaseIterable {
         case .premiere, .liveNow: steps = [1 * hour]
         case .lowDisk, .accessPaused: steps = [1 * hour]
         case .streamForbidden: steps = [2 * hour, 6 * hour, 24 * hour]
+        case .unavailable: steps = [1 * hour, 3 * hour, 6 * hour, 12 * hour, 24 * hour]
         case .unknown: steps = [1 * hour, 6 * hour]
         }
         return steps[min(max(attempt, 1), steps.count) - 1]
@@ -120,7 +126,17 @@ public enum DeferCause: String, Codable, Sendable, CaseIterable {
         case .network: 8
         case .botCheck: 12
         case .streamForbidden: 6
+        // 1, 3, 6 and 12 hours, then daily: the 19th try is 15 days after the first.
+        case .unavailable: 19
         default: nil
+        }
+    }
+
+    /// What the video fails as once `attemptLimit` is reached.
+    public var failsAs: FailCause {
+        switch self {
+        case .unavailable: .removed
+        default: .gaveUp
         }
     }
 }

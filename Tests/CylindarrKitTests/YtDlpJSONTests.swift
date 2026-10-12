@@ -44,6 +44,18 @@ import Testing
         #expect(l.entries.contains { $0.id == "snyvQ9COmb8" })
     }
 
+    /// A playlist's entry for a video that is not public yet: an id and a
+    /// thumbnail, nothing else (shape seen 2026-10-08).
+    @Test func aVideoNotYetPublicIsAPlaceholder() throws {
+        let json = #"{"id":"PLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","title":"t","entries":["#
+            + #"{"_type":"url","ie_key":"Youtube","id":"AAAAAAAAAAA","url":"https://www.youtube.com/watch?v=AAAAAAAAAAA","title":null,"duration":null,"live_status":null,"availability":null},"#
+            + #"{"_type":"url","ie_key":"Youtube","id":"BBBBBBBBBBB","url":"https://www.youtube.com/watch?v=BBBBBBBBBBB","title":"An episode","duration":3634.0},"#
+            + #"{"_type":"url","ie_key":"Youtube","id":"CCCCCCCCCCC","title":"[Private video]","duration":null},"#
+            + #"{"_type":"url","ie_key":"Youtube","id":"DDDDDDDDDDD","title":"A premiere","duration":null,"live_status":"is_upcoming"}]}"#
+        let l = try Listing.decode(Data(json.utf8))
+        #expect(l.entries.map(\.isPlaceholder) == [true, false, true, false])
+    }
+
     @Test func aChannelVideosTab() throws {
         let l = try Listing.decode(Fixture.data("ytdlp/flat-channel-videos-technology-connections.json"))
         #expect(l.channelID == "UCy0tKL1T7wFoYcxCe0xjN6Q")

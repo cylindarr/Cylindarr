@@ -224,7 +224,7 @@ extension Engine {
         case .deferred(let cause, let detail):
             record.attempts += 1
             if let limit = cause.attemptLimit, record.attempts >= limit {
-                record.state = .failed(.gaveUp)
+                record.state = .failed(cause.failsAs)
             } else {
                 record.state = .deferred(cause, until: Date().addingTimeInterval(cause.backoff(afterAttempt: record.attempts)))
             }

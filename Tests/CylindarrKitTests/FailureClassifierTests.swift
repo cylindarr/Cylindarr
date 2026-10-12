@@ -26,8 +26,17 @@ import Testing
         #expect(FailureClassifier.diagnose(stderr: Fixture.text("errors/stream-forbidden.txt")) == .deferred(.streamForbidden))
     }
 
-    @Test func anUnavailableVideoFails() {
-        #expect(FailureClassifier.diagnose(stderr: Fixture.text("errors/unavailable.txt")) == .failed(.removed))
+    /// yt-dlp 2026.08.19 on 2026-10-07, for a video in a playlist 14 hours
+    /// before it was public. The same words cover a removed video, so it
+    /// waits, and fails as removed after about two weeks.
+    @Test func aBareUnavailableWaits() throws {
+        #expect(FailureClassifier.diagnose(stderr: Fixture.text("errors/unavailable.txt")) == .deferred(.unavailable))
+        #expect(FailureClassifier.diagnose(stderr: "ERROR: [youtube] AAAAAAAAAAA: Video unavailable") == .deferred(.unavailable))
+        #expect(DeferCause.unavailable.failsAs == .removed)
+        #expect(DeferCause.unknown.failsAs == .gaveUp)
+        let limit = try #require(DeferCause.unavailable.attemptLimit)
+        let waited = (1..<limit).map { DeferCause.unavailable.backoff(afterAttempt: $0) }.reduce(0, +)
+        #expect((13 * 86400...16 * 86400).contains(waited))
     }
 
     @Test(arguments: [

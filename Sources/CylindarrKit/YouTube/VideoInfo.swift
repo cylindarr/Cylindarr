@@ -163,8 +163,12 @@ public struct ListingEntry: Decodable, Sendable, Equatable {
     }
 
     /// Private and deleted videos stay in playlists as placeholders with these
-    /// titles and no duration.
+    /// titles and no duration. A video the channel has put in a playlist
+    /// before it is public is listed with no title and no duration at all,
+    /// only its id and thumbnail; extracting it says "Video unavailable"
+    /// until it goes public, which was 14 hours after it was first listed in
+    /// the case seen on 2026-10-07. It is new once it has a title.
     public var isPlaceholder: Bool {
-        title == "[Private video]" || title == "[Deleted video]"
+        title == "[Private video]" || title == "[Deleted video]" || (title == nil && duration == nil)
     }
 }

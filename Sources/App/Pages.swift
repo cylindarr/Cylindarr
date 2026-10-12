@@ -73,7 +73,9 @@ enum Pages {
         var when = ""
         switch r.state {
         case .skipped(let reason): why = reason.sentence
-        case .deferred(let cause, let until): why = cause.rawValue; when = "next try " + short.string(from: until)
+        case .deferred(let cause, let until):
+            why = cause == .unavailable ? "unavailable: not public yet, or removed" : cause.rawValue
+            when = "next try " + short.string(from: until)
         case .failed(let cause): why = cause.sentence + (r.lastCause.map { ": " + $0 } ?? "")
         case .placed: why = r.path.map { ($0 as NSString).lastPathComponent } ?? ""
         default: why = ""

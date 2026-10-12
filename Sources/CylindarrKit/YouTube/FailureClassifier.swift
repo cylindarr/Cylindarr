@@ -45,8 +45,11 @@ public enum FailureClassifier {
         ("not made this video available in your country", .failed(.geoBlocked)),
         ("not available in your country", .failed(.geoBlocked)),
         ("Requested format is not available", .failed(.formatUnavailable)),
-        ("This video is unavailable", .failed(.removed)),
-        ("Video unavailable", .failed(.removed)),
+        // Nothing more than "unavailable" is also what a video in a playlist
+        // says before it is public, so it waits. The removals YouTube names
+        // are above.
+        ("This video is unavailable", .deferred(.unavailable)),
+        ("Video unavailable", .deferred(.unavailable)),
         // A page that is not there, on any site. Before "Unable to download
         // webpage", which a 404 also says.
         ("HTTP Error 404", .failed(.removed)),

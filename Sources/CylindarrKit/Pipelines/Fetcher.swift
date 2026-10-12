@@ -179,7 +179,7 @@ public struct Fetcher: Sendable {
     func deferVideo(_ record: inout VideoRecord, _ cause: DeferCause, detail: String) async -> Outcome {
         record.attempts += 1
         if let limit = cause.attemptLimit, record.attempts >= limit {
-            return await failVideo(&record, .gaveUp, detail: "\(cause.rawValue) \(record.attempts) times; \(detail)")
+            return await failVideo(&record, cause.failsAs, detail: "\(cause.rawValue) \(record.attempts) times; \(detail)")
         }
         let until = clock.now.addingTimeInterval(cause.backoff(afterAttempt: record.attempts))
         record.state = .deferred(cause, until: until)
