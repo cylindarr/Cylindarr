@@ -39,7 +39,7 @@ cd Apple && xcodegen generate                 # then open Cylindarr.xcodeproj
 
 Everything that decides anything (pairing, the API client, what a share card does) is in `CylindarrClientKit`; the SwiftUI views every target shows are in its `CylindarrClientUI` library. The apps and extensions are thin shells. The request and response types are the server's own `CylindarrAPI` package, which both sides compile.
 
-To build onto your own devices, change `DEVELOPMENT_TEAM` and the `com.pantuso` bundle identifiers in `project.yml` to yours, then run `Apple/scripts/install-on-phone.sh` (with `CYLINDARR_DEVICE` set to the phone's identifier from `xcrun devicectl list devices`) or `Apple/scripts/install-on-mac.sh`. Each build stamps the version (year and month) and a build counter kept in `Apple/.buildnumber` into the app and its extension. A Debug build pairs at launch from `CYLINDARR_PAIR` (a pairing link) and opens a grab card from `CYLINDARR_GRAB`, for simulator runs that cannot tap a confirmation.
+To build onto your own devices, set `CYLINDARR_TEAM` to your Apple Developer team ID (project.yml takes it when xcodegen runs) and change the `com.pantuso` bundle identifiers in `project.yml` to yours, then run `Apple/scripts/install-on-phone.sh` (with `CYLINDARR_DEVICE` set to the phone's identifier from `xcrun devicectl list devices`) or `Apple/scripts/install-on-mac.sh`. Each build stamps the version (year and month) and a build counter kept in `Apple/.buildnumber` into the app and its extension. A Debug build pairs at launch from `CYLINDARR_PAIR` (a pairing link) and opens a grab card from `CYLINDARR_GRAB`, for simulator runs that cannot tap a confirmation.
 
 ## The browser extension
 

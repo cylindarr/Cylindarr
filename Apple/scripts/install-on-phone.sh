@@ -5,8 +5,11 @@
 #   scripts/install-on-phone.sh --launch   # and open it
 #
 # The phone is paired over the network: awake and on the same network is enough.
-# Signing uses the DEVELOPMENT_TEAM in project.yml; change it for your own team.
+# Signing uses your team: CYLINDARR_TEAM is the team ID from your Apple
+# Developer account, which project.yml takes when xcodegen runs.
 set -eu
+
+: "${CYLINDARR_TEAM:?set CYLINDARR_TEAM to your Apple Developer team ID}"
 
 # The phone's identifier, from `xcrun devicectl list devices`.
 DEVICE="${CYLINDARR_DEVICE:?set CYLINDARR_DEVICE to the phone's identifier}"

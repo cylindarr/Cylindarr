@@ -7,11 +7,15 @@
 
 <p align="center"><b>Channels in. Shows out.</b></p>
 
-Cylindarr follows YouTube channels and playlists and files what they post as TV shows for Plex, Jellyfin, and Emby.
+Cylindarr follows YouTube channels and playlists, and files what they post as TV shows for Plex, Jellyfin, and Emby.
 
-You give it a channel. It notices new uploads, downloads them with yt-dlp, cuts the sponsor segments, and puts each video in a show folder with an NFO, a thumbnail, and subtitles, named and numbered so your media server reads it as a series without a plugin. Then it tells Plex or Jellyfin the file is there. It sits beside Sonarr and Radarr and keeps their habits: a queue, rules per show, and a page that tells you what needs you.
+You give it a channel. It notices new uploads, downloads them with yt-dlp, cuts away the sponsor segments, and puts each video in a show folder with an NFO, a thumbnail, and subtitles, named and numbered so your media server reads it as a series without a plugin. Then it tells Plex or Jellyfin the file is there. It sits beside Sonarr and Radarr and keeps their habits: a queue, rules per show, and a page that tells you what needs you.
 
-It exists because the tools people used for this stopped moving. Pinchflat's last commit was in December 2025, while YouTube keeps changing what it takes to download a video. TubeArr's repository is gone. A YouTube downloader that does not keep up breaks within weeks. So Cylindarr is built around the assumption that YouTube _will_ push back, and around saying clearly when it has.
+It exists because YouTube has become actively hostile toward it's users and I wasn't going to take it any more. Unfortuantely the tools people used for this stopped moving. Pinchflat's last commit was in December 2025, while YouTube keeps changing what it takes to download a video. TubeArr's repository is gone. A YouTube downloader that does not keep up breaks within weeks. So Cylindarr is built around the assumption that YouTube _will_ push back, and around saying clearly when it has. Fuck those guys. It would be nice if content creators would put their stuff outside of YouTube's walled garden. This stuff belongs to the creators, not YouTube. There is no reason everything needs to be in this hostile monolith.
+
+Cylindarr has a share extension for iPhone and Mac and an extension for Chromium browsers (Chrome, Arc, Brave, Edge). Each sends a link to your server in one or two taps, and the server files it under `Grabs` as a film. A grab can be any page yt-dlp can download a video from, not only YouTube.
+
+I recommend using Tailscale for your infra and keeping this server inside it for your own convenience and safety.
 
 ## What it does
 
@@ -64,13 +68,21 @@ Open `http://<your server>:8295`, then:
 
 ## Status
 
-Version 0.2.0. It runs one household's library every day, on an Intel machine with Quick Sync, beside Plex and Jellyfin. It has not yet met many other setups: the AMD and NVIDIA encoders are tested against their command lines but not yet on the hardware, and Emby has not been tried. Expect rough edges, and please open an issue when you find one.
+Version 0.3.0. It runs one household's library every day, on an Intel machine with Quick Sync, beside Plex and Jellyfin. It has not yet met many other setups: the AMD and NVIDIA encoders are tested against their command lines but not yet on the hardware, and Emby has not been tried. I've tried to anticipate the needs other people will have, but it is of course still going to be fairly bespoke. Expect rough edges, and please open an issue when you find one, and make feature or accomodation suggestions and I will listen.
 
 There is no published image yet, so the compose file builds it from this repository.
 
 ## YouTube's terms
 
-Downloading from YouTube is against YouTube's terms of service. Every tool in this space says so and leaves the decision to you, and so does Cylindarr. It does not get around DRM and does not download purchased or rented content.
+Downloading from YouTube is against YouTube's terms of service. Every tool in this space says so and leaves the decision to you, and so does Cylindarr.
+
+Cylindarr is for personal archiving: keeping your own copy of the channels and playlists you follow, filed for your own media server. It is not for republishing anyone's videos.
+
+It contains no code that gets around YouTube's protections. The downloading is done by yt-dlp, which Cylindarr runs as a separate program. The proof-of-origin tokens YouTube asks for come from bgutil-ytdlp-pot-provider, a separate project in its own container. Cookies, if you give it any, belong to your own account and are used only by yt-dlp, only for videos that need you signed in. It does not get around DRM and does not download purchased or rented content.
+
+## Contributing
+
+Issues and suggestions are welcome. Pull requests and code are not accepted; [CONTRIBUTING.md](CONTRIBUTING.md) says what helps instead.
 
 ## License
 

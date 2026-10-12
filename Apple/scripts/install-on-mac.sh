@@ -5,8 +5,12 @@
 #   scripts/install-on-mac.sh --launch   # and open it
 #
 # The share extension and the Services item register
-# when the app is in /Applications and has been opened once.
+# when the app is in /Applications and has been opened once. Signing uses
+# your team: CYLINDARR_TEAM is the team ID from your Apple Developer account,
+# which project.yml takes when xcodegen runs.
 set -eu
+
+: "${CYLINDARR_TEAM:?set CYLINDARR_TEAM to your Apple Developer team ID}"
 
 # Optional: an App Store Connect API key, for a Mac whose Xcode has no Apple
 # ID signed in (automatic signing cannot make a profile without one or the

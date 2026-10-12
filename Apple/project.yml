@@ -17,7 +17,9 @@ packages:
 
 settings:
   base:
-    DEVELOPMENT_TEAM: JE58Y62NM2
+    # Your Apple Developer team ID, from CYLINDARR_TEAM when xcodegen runs
+    # (the install scripts insist on it).
+    DEVELOPMENT_TEAM: ${CYLINDARR_TEAM}
     CODE_SIGN_STYLE: Automatic
     SWIFT_VERSION: "6.0"
     # Placeholders. scripts/stamp-version.sh stamps every built Info.plist
